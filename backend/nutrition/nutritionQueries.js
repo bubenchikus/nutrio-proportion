@@ -1,35 +1,32 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 import NutritionModel from "./nutritionSchema.js";
+import * as helpers from "./helpers.js";
 
 export const getNutrition = async (req, res) => {
   try {
-    let dbQuery;
+    const pipeline = [];
 
     if (req.query.description) {
-      // from search field
-      dbQuery = NutritionModel.find({
-        description: { $regex: req.query.description, $options: "i" },
+      pipeline.push({
+        $match: {
+          description: { $regex: req.query.description, $options: "i" },
+        },
       });
     } else {
-      dbQuery = NutritionModel.find();
+      pipeline.push({ $match: {} });
     }
 
-    if (req.query.base) {
-      // weight or cals
-    }
+    // base - byWeight or byCalories; key - carb, protein, fat, fiber; sort - asc or desc
+    const base = req.query.base || "byCalories";
+    const key = req.query.key || "protein";
+    const sort = req.query.sort === "desc" ? -1 : 1;
 
-    if (req.query.key) {
-      // carb, protein, fat, fiber, cals
-    }
+    pipeline.push({
+      $sort: {
+        [`foodNutrients.proportions.${base}.${key}`]: sort,
+      },
+    });
 
-    if (req.query.sort) {
-      // asc or desc
-      console.log("!!!!");
-    }
-
-    const found = await dbQuery;
+    const found = await NutritionModel.aggregate(pipeline);
     res.json(found);
   } catch (err) {
     console.log(err);
@@ -43,6 +40,33 @@ export const getNutritionById = async (req, res) => {
   try {
     const found = await NutritionModel.findOne({ _id: req.params.id });
     res.json(found);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Getting nutrition data from DB Failed!",
+    });
+  }
+};
+
+export const postNutrition = async (req, res) => {
+  try {
+    // const found = await NutritionModel.findOne({ _id: req.params.id });
+    const proportions = helpers.calculateProportions(
+      req.body.cals,
+      req.body.carb,
+      req.body.protein,
+      req.body.fat,
+      req.body.fiber
+    );
+    const posted = await NutritionModel.create({
+      description: req.body.description,
+      dataType: "User",
+      foodNutrients: {
+        byWeight: proportions[0],
+        byCalories: proportions[1],
+      },
+    });
+    res.json(posted);
   } catch (err) {
     console.log(err);
     res.status(500).json({

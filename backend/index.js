@@ -1,7 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
+import * as NutritionQueries from "./nutrition/nutritionQueries.js";
+import * as UserQueries from "./user/userQueries.js";
+import { checkAuth } from "./auth.js";
 import dotenv from "dotenv";
-import { NutritionQueries } from "./nutrition/index.js";
 dotenv.config();
 
 const app = express();
@@ -12,16 +14,17 @@ mongoose
   .then(() => console.log("Succesfully connected to DB..."))
   .catch((err) => console.log("Connection failed!", err));
 
-app.get("/food", NutritionQueries.getNutrition); // filter with query parameters: asc/desc, priority nutrient by calories/weight proportion, word search
-app.get("/food/:id", NutritionQueries.getNutritionById);
+app.get("/nutrition", NutritionQueries.getNutrition); // filter with query parameters: asc/desc, priority nutrient by calories/weight proportion, word search
+app.post("/nutrition", checkAuth, NutritionQueries.postNutrition);
+app.get("/nutrition/:id", NutritionQueries.getNutritionById);
 
 app.get("/login");
 app.get("/register");
-app.get("/me/favourites");
-app.get("/me/edit-profile");
-app.get("/me/edit-favourites");
+app.get("/me", checkAuth, UserQueries.getUserById);
+app.get("/me/favourites", checkAuth);
+app.post("/me/favourites", checkAuth);
 
-app.use("/pictures", express.static("pictures"));
+// app.use("/pictures", express.static("pictures"));
 
 app.listen(process.env.PORT, (err) => {
   if (err) {

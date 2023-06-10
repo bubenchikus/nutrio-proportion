@@ -32,7 +32,6 @@ const NutritionSchema = new mongoose.Schema({
       },
     },
   },
-  avatarUrl: String,
 });
 
 export default mongoose.model("Nutrition", NutritionSchema, "nutrition");
