@@ -18,7 +18,13 @@ export const getNutrition = async (req, res) => {
     // base - byWeight or byCalories; key - carb, protein, fat, fiber; sort - asc or desc
     const base = req.query.base || "byCalories";
     const key = req.query.key || "protein";
-    const sort = req.query.sort === "desc" ? -1 : 1;
+    const sort = req.query.sort === "asc" ? 1 : -1;
+
+    pipeline.push({
+      $match: {
+        [`foodNutrients.proportions.${base}.${key}`]: { $exists: true },
+      },
+    });
 
     pipeline.push({
       $sort: {

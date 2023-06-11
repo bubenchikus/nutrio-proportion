@@ -1,0 +1,40 @@
+.gridHeader {
+  display: flex;
+  background-color: rgb(222, 222, 222);
+  height: 60px;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  width: 100%;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.cellText {
+  padding: 5px;
+}
+
+.searchCell {
+  @extend .cell;
+  display: flex;
+  flex-direction: row;
+}
+
+.searchRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.selectCell {
+  @extend .cell;
+  display: flex;
+  flex-direction: row;
+}
