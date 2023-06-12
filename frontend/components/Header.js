@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Header.module.scss";
 import Image from "next/image";
 import barIcon from "../public/barIcon.svg";
+import Link from "next/link";
 
 const Header = ({ children, keywords }) => {
   return (
@@ -22,15 +23,23 @@ const Header = ({ children, keywords }) => {
         <title>Nutrio-proportion</title>
       </Head>
       <div className={styles.grid}>
-        <div className={styles.logoBox}>
+        <Link className={styles.logoBox} href="/">
           <Image src={barIcon} className={styles.image} />
           <div className={styles.textLogo}>Nutrio-proportion</div>
-        </div>
+        </Link>
         <div></div>
-        <div className={styles.gridLink}>Main page</div>
-        <div className={styles.gridLink}>Me</div>
-        <div className={styles.gridLink}>Favourites</div>
-        <div className={styles.gridLink}>Logout</div>
+        <Link className={styles.gridLink} href="/">
+          Main page
+        </Link>
+        <Link className={styles.gridLink} href="/me">
+          Me
+        </Link>
+        <Link className={styles.gridLink} href="/me/favourites">
+          Favourites
+        </Link>
+        <Link className={styles.gridLink} href="/login">
+          Login
+        </Link>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Container from "@mui/material/Container";
 import styles from "../styles/Index.module.scss";
-import axios from "../utils/axios.js";
+import axios from "../axios";
 import Grid from "../components/Grid";
 import GridHeader from "../components/GridHeader";
 import { useState, useEffect } from "react";
@@ -35,28 +35,20 @@ const Index = () => {
 
   return (
     <>
-      <Container width="lg">
-        <Header keywords={", main page"}></Header>
-        <GridHeader
-          queryParams={queryParams}
-          setQueryParams={setQueryParams}
-          baseList={baseList}
-          nutrientList={nutrientList}
-          sortList={sortList}
-        />
-        <Grid
-          data={nutritionData}
-          queryParams={queryParams}
-          nutrientList={nutrientList}
-        />
-      </Container>
+      <GridHeader
+        queryParams={queryParams}
+        setQueryParams={setQueryParams}
+        baseList={baseList}
+        nutrientList={nutrientList}
+        sortList={sortList}
+      />
+      <Grid
+        data={nutritionData}
+        queryParams={queryParams}
+        nutrientList={nutrientList}
+      />
     </>
   );
 };
 
 export default Index;
-
-// export async function getStaticProps(context) {
-//   const nutrition = await axios.get("/nutrition").then((res) => res.data);
-//   return { props: { nutrition } };
-// }

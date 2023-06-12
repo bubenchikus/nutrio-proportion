@@ -22,9 +22,13 @@ app.get("/nutrition", NutritionQueries.getNutrition); // filter with query param
 app.post("/nutrition", checkAuth, NutritionQueries.postNutrition);
 app.get("/nutrition/:id", NutritionQueries.getNutritionById);
 
-app.get("/login");
-app.get("/register");
-app.get("/me", checkAuth, UserQueries.getUserById);
+app.post("/login", UserQueries.login);
+
+app.post("/register", UserQueries.register);
+
+app.get("/me", checkAuth, UserQueries.getMe);
+app.post("/me", checkAuth);
+
 app.get("/me/favourites", checkAuth);
 app.post("/me/favourites", checkAuth);
 

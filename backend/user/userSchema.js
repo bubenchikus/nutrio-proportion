@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     unique: true,
   },
 
-  hashPassword: {
+  passwordHash: {
     type: String,
     required: true,
   },
@@ -22,9 +22,9 @@ const UserSchema = new mongoose.Schema({
     type: Object,
     required: true,
     default: {
-      base: { byCalories: { type: String, required: true } },
-      key: { protein: { type: String, required: true } },
-      sort: { asc: { type: String, required: true } },
+      base: "byCalories",
+      key: "protein",
+      sort: "desc",
     },
   },
 });

@@ -13,17 +13,32 @@ const GridHeader = ({
   sortList,
 }) => {
   const [searchQuery, setSearchQuery] = useState();
+
+  const sendSearchQuery = () => {
+    setQueryParams([
+      searchQuery,
+      queryParams[1],
+      queryParams[2],
+      queryParams[3],
+    ]);
+  };
   return (
     <div className={styles.gridHeader}>
       <div className={styles.grid}>
-        <div className={styles.searchCell}>
-          {/* <div className={styles.cellText}>Search:</div> */}
+        <div className={styles.cell}>
           <div className={styles.searchRow}>
             <TextField
-              label="Search product..."
+              InputLabelProps={{ shrink: false }}
+              autoComplete="off"
+              label={searchQuery ? "" : "Search product..."}
               size="small"
               onChange={(e) => {
                 setSearchQuery(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  sendSearchQuery();
+                }
               }}
             />
             <Button
@@ -31,19 +46,14 @@ const GridHeader = ({
               disableElevation
               sx={{ backgroundColor: "rgb(170, 170, 170)" }}
               onClick={() => {
-                setQueryParams([
-                  searchQuery,
-                  queryParams[1],
-                  queryParams[2],
-                  queryParams[3],
-                ]);
+                sendSearchQuery();
               }}
             >
               Search
             </Button>
           </div>
         </div>
-        <div className={styles.selectCell}>
+        <div className={styles.cell}>
           <div className={styles.cellText}>Base:</div>
           <Select
             size="small"
@@ -64,7 +74,7 @@ const GridHeader = ({
             ))}
           </Select>
         </div>
-        <div className={styles.selectCell}>
+        <div className={styles.cell}>
           <div className={styles.cellText}>Key:</div>
           <Select
             size="small"
@@ -85,7 +95,7 @@ const GridHeader = ({
             ))}
           </Select>
         </div>
-        <div className={styles.selectCell}>
+        <div className={styles.cell}>
           <div className={styles.cellText}>Sort:</div>
           <Select
             size="small"
@@ -106,6 +116,17 @@ const GridHeader = ({
             ))}
           </Select>
         </div>
+        <div className={styles.cell}>
+          <Button
+            variant="contained"
+            disableElevation
+            sx={{ backgroundColor: "rgb(170, 170, 170)" }}
+            onClick={() => {}}
+          >
+            Reset table
+          </Button>
+        </div>
+        <div></div>
       </div>
     </div>
   );
