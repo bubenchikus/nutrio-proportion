@@ -1,12 +1,10 @@
-import Header from "../components/Header";
-import Container from "@mui/material/Container";
 import styles from "../styles/Index.module.scss";
 import axios from "../axios";
 import Grid from "../components/Grid";
 import GridHeader from "../components/GridHeader";
 import { useState, useEffect } from "react";
 
-const Index = () => {
+const Index = ({ userData, setUserData, loggedIn }) => {
   const baseList = ["byWeight", "byCalories"];
   const nutrientList = ["carb", "fiber", "protein", "fat"];
   const sortList = ["asc", "desc"];
@@ -33,6 +31,24 @@ const Index = () => {
       });
   }, [queryParams]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      axios
+        .get(`/me`, {
+          headers: {
+            Authentication: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          setUserData(response.data);
+        })
+        .catch((err) => {
+          console.warn(err);
+          alert("Error occured while getting user data!");
+        });
+    }
+  }, [loggedIn]);
+
   return (
     <>
       <GridHeader
@@ -41,11 +57,16 @@ const Index = () => {
         baseList={baseList}
         nutrientList={nutrientList}
         sortList={sortList}
+        preferences={userData?.preferences}
+        loggedIn={loggedIn}
       />
       <Grid
         data={nutritionData}
         queryParams={queryParams}
         nutrientList={nutrientList}
+        userData={userData}
+        setUserData={setUserData}
+        loggedIn={loggedIn}
       />
     </>
   );

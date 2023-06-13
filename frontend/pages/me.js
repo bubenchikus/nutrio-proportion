@@ -1,27 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+const Me = ({ userData, loggedIn }) => {
+  const [editing, setEditing] = useState(false);
 
-import axios from "../axios";
-
-const Me = () => {
-  const [userData, setUserData] = useState();
-
-  useEffect(() => {
-    axios
-      .get(`/me`, {
-        headers: {
-          Authentication: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        setUserData(response.data);
-      })
-      .catch((err) => {
-        console.warn(err);
-        alert("Error occured while getting user data!");
-      });
-  }, []);
-
-  return <h1>{JSON.stringify(userData)}</h1>;
+  if (loggedIn) {
+    return (
+      <>
+        <div>My data</div>
+        <div>{userData?.email}</div>
+        <div>{JSON.stringify(userData?.preferences)}</div>
+        <div>{JSON.stringify(userData?.favourites)}</div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <h1>Please log in to view your data!</h1>
+        <Button>Log in!</Button>
+      </>
+    );
+  }
 };
 
 export default Me;

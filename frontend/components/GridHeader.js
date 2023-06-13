@@ -2,7 +2,7 @@ import styles from "../styles/GridHeader.module.scss";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
-import { MenuItem } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 
 const GridHeader = ({
@@ -11,6 +11,8 @@ const GridHeader = ({
   baseList,
   nutrientList,
   sortList,
+  preferences,
+  loggedIn,
 }) => {
   const [searchQuery, setSearchQuery] = useState();
 
@@ -22,6 +24,15 @@ const GridHeader = ({
       queryParams[3],
     ]);
   };
+
+  const resetTable = () => {
+    if (loggedIn) {
+      setQueryParams(["", preferences.base, preferences.key, preferences.sort]);
+    } else {
+      setQueryParams(["", baseList[1], nutrientList[2], sortList[1]]);
+    }
+  };
+
   return (
     <div className={styles.gridHeader}>
       <div className={styles.grid}>
@@ -41,14 +52,7 @@ const GridHeader = ({
                 }
               }}
             />
-            <Button
-              variant="contained"
-              disableElevation
-              sx={{ backgroundColor: "rgb(170, 170, 170)" }}
-              onClick={() => {
-                sendSearchQuery();
-              }}
-            >
+            <Button onClick={sendSearchQuery} className="greyButton">
               Search
             </Button>
           </div>
@@ -117,12 +121,7 @@ const GridHeader = ({
           </Select>
         </div>
         <div className={styles.cell}>
-          <Button
-            variant="contained"
-            disableElevation
-            sx={{ backgroundColor: "rgb(170, 170, 170)" }}
-            onClick={() => {}}
-          >
+          <Button onClick={resetTable} className="greyButton">
             Reset table
           </Button>
         </div>

@@ -1,24 +1,29 @@
 import axios from "../axios";
-import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
+import { useState } from "react";
+import Button from "@mui/material/Button";
 
-const Login = () => {
+const Login = ({ setLoggedIn, router, setUserData }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = await axios({
+    await axios({
       method: "POST",
       url: "login",
       headers: {},
       data: { email: email, password: password },
-    }).then((data) => data.data.token);
-    localStorage.setItem("token", token);
+    })
+      .then((data) => {
+        localStorage.setItem("token", data.data.token);
+        setLoggedIn(true);
+        router.push("/");
+      })
+      .catch((err) => {
+        console.warn(err);
+        alert("Incorrect user/password!");
+      });
   };
-
-  const router = useRouter();
 
   return (
     <form onSubmit={handleSubmit} className="formBlock">
@@ -33,14 +38,9 @@ const Login = () => {
         placeholder="password"
       />
       <div>
-        <button
-          type="submit"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
+        <Button type="submit" className="greyButton">
           Submit
-        </button>
+        </Button>
       </div>
     </form>
   );

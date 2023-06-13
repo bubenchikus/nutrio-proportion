@@ -2,12 +2,47 @@ import UserModel from "./userSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+const decodeToken = (req) => {
+  const token = (req.headers.authentication || "").replace(/Bearer\s?/, "");
+  return jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+};
+
+const signToken = (user) => {
+  return jwt.sign(
+    {
+      _id: user._id,
+    },
+    process.env.JWT_TOKEN_SECRET,
+    {
+      expiresIn: "30d",
+    }
+  );
+};
+
+const removePasswordHashFromData = (user) => {
+  const { passwordHash, ...userData } = user;
+  return userData;
+};
+
 export const getMe = async (req, res) => {
   try {
-    const token = (req.headers.authentication || "").replace(/Bearer\s?/, "");
-    const decoded = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-    const found = await UserModel.findOne({ _id: decoded._id });
+    const found = await UserModel.findOne({ _id: decodeToken(req)._id }).lean();
     res.json(found);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Getting nutrition data from DB Failed!",
+    });
+  }
+};
+
+export const setMe = async (req, res) => {
+  try {
+    const changed = await UserModel.updateOne(
+      { _id: decodeToken(req)._id },
+      req.body
+    ).lean();
+    res.json(changed);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -18,7 +53,7 @@ export const getMe = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const user = await UserModel.findOne({ email: req.body.email });
+    const user = await UserModel.findOne({ email: req.body.email }).lean();
 
     if (!user) {
       return res.status(404).json({
@@ -28,7 +63,7 @@ export const login = async (req, res) => {
 
     const isValidPass = await bcrypt.compare(
       req.body.password,
-      user._doc.passwordHash
+      user.passwordHash
     );
 
     if (!isValidPass) {
@@ -37,20 +72,10 @@ export const login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      {
-        _id: user._id,
-      },
-      process.env.JWT_TOKEN_SECRET,
-      {
-        expiresIn: "30d",
-      }
-    );
-
-    const { passwordHash, ...userData } = user;
+    const token = signToken(user);
 
     res.json({
-      ...userData,
+      ...removePasswordHashFromData(user),
       token,
     });
   } catch (err) {
@@ -74,20 +99,10 @@ export const register = async (req, res) => {
 
     const user = await doc.save();
 
-    const token = jwt.sign(
-      {
-        _id: user._id,
-      },
-      process.env.JWT_TOKEN_SECRET,
-      {
-        expiresIn: "30d",
-      }
-    );
-
-    const { passwordHash, ...userData } = user._doc;
+    const token = signToken(user);
 
     res.json({
-      ...userData,
+      ...removePasswordHashFromData(user),
       token,
     });
   } catch (err) {
@@ -98,14 +113,9 @@ export const register = async (req, res) => {
   }
 };
 
-// export const editUser = async (req, res) => {
-//     try {
-//       const found = await UserModel.findOne({ _id: req.params.id });
-//       res.json(found);
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json({
-//         message: "Getting nutrition data from DB Failed!",
-//       });
-//     }
-//   };
+export const deleteUser = async (req, res) => {
+  try {
+    const deleted = await UserModel.deleteOne({ _id: decodeToken(req)._id });
+    res.json(deleted);
+  } catch (err) {}
+};

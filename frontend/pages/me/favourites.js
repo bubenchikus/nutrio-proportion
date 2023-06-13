@@ -1,26 +1,16 @@
-import axios from "../../axios";
-import { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
 
-const Favourites = () => {
-  const [favourites, setFavourites] = useState();
-
-  useEffect(() => {
-    axios
-      .get(`/me`, {
-        headers: {
-          Authentication: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        setFavourites(response.data.favourites);
-      })
-      .catch((err) => {
-        console.warn(err);
-        alert("Error occured while getting user data!");
-      });
-  }, []);
-
-  return <h1>{JSON.stringify(favourites)}</h1>;
+const Favourites = ({ userData, loggedIn }) => {
+  if (loggedIn) {
+    return <h1>{JSON.stringify(userData?.favourites)}</h1>;
+  } else {
+    return (
+      <>
+        <h1>Please log in to view your favourites!</h1>
+        <Button>Log in!</Button>
+      </>
+    );
+  }
 };
 
 export default Favourites;

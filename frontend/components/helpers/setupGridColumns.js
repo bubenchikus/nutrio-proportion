@@ -2,7 +2,7 @@ import HSBar from "react-horizontal-stacked-bar-chart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-const setupColumns = (nutrients, base, favourites) => {
+const setupGridColumns = (nutrients, base, userData) => {
   const favouriteColumn = {
     field: "fav",
     flex: 0.1,
@@ -11,7 +11,10 @@ const setupColumns = (nutrients, base, favourites) => {
     sortable: false,
     disableColumnMenu: true,
     renderCell: (params) => {
-      return <FavoriteIcon />;
+      if (userData?.favourites?.includes(params.row._id)) {
+        return <FavoriteIcon />;
+      }
+      return <FavoriteBorderIcon />;
     },
   };
 
@@ -32,7 +35,6 @@ const setupColumns = (nutrients, base, favourites) => {
     valueGetter: (params) => {
       var title = "Energy";
       Object.keys(params.row?.foodNutrients).forEach((el) => {
-        console.log(el);
         if (el.includes("Energy")) {
           title = el;
         }
@@ -120,4 +122,4 @@ const setupColumns = (nutrients, base, favourites) => {
     .concat(proportionPreview);
 };
 
-export default setupColumns;
+export default setupGridColumns;

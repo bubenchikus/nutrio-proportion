@@ -1,12 +1,20 @@
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../styles/Grid.module.scss";
-import setupColumns from "./helpers/setupColumns";
+import setupGridColumns from "./helpers/setupGridColumns";
+import setMe from "../setMe";
 
-const Grid = ({ data, queryParams, nutrientList }) => {
+const Grid = ({
+  data,
+  queryParams,
+  nutrientList,
+  userData,
+  setUserData,
+  loggedIn,
+}) => {
   const base = queryParams[1];
   const nKey = queryParams[2];
 
-  var nutrients = nutrientList;
+  var nutrients = nutrientList.slice(); // copy array
   if (nKey === "carb") {
     nutrients.splice(nutrients.indexOf(nKey), 2);
     nutrients = [nKey, "fiber"].concat(nutrients);
@@ -24,6 +32,25 @@ const Grid = ({ data, queryParams, nutrientList }) => {
           },
         },
       }}
+      onCellClick={(params, event) => {
+        if ((loggedIn && params.field === "fav") || event.stopPropagation()) {
+          if (!userData.favourites?.includes(params.row._id)) {
+            userData.favourites.push(params.row._id);
+          } else {
+            userData.favourites.splice(
+              userData.favourites.indexOf(params.row._id),
+              1
+            );
+          }
+          setUserData((prev) => ({
+            ...prev,
+            favourites: userData.favourites,
+          }));
+          setMe(userData);
+        } else if (!loggedIn && params.field === "fav") {
+          alert("You must be authorized to add favourites!");
+        }
+      }}
       disableColumnResize={false}
       sx={{
         height: "80vh",
@@ -34,7 +61,7 @@ const Grid = ({ data, queryParams, nutrientList }) => {
         ".MuiDataGrid-columnHeaderTitle": { fontWeight: "bold" },
       }}
       getRowId={(row) => row._id}
-      columns={setupColumns(nutrients, base)}
+      columns={setupGridColumns(nutrients, base, userData)}
       rows={data}
       disableRowSelectionOnClick
     />

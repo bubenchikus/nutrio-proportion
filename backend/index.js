@@ -27,7 +27,8 @@ app.post("/login", UserQueries.login);
 app.post("/register", UserQueries.register);
 
 app.get("/me", checkAuth, UserQueries.getMe);
-app.post("/me", checkAuth);
+app.post("/me", checkAuth, UserQueries.setMe);
+app.delete("/me", checkAuth, UserQueries.deleteUser);
 
 app.get("/me/favourites", checkAuth);
 app.post("/me/favourites", checkAuth);
