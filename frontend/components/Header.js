@@ -41,7 +41,8 @@ const Header = ({ keywords, loggedIn, setLoggedIn, router, setUserData }) => {
             </Link>
             <div
               className={styles.gridLink}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 router.push("/login");
                 setUserData({});
                 setLoggedIn(false);

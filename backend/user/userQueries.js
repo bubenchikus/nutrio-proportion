@@ -2,9 +2,15 @@ import UserModel from "./userSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const decodeToken = (req) => {
+const decodeToken = (req, res) => {
   const token = (req.headers.authentication || "").replace(/Bearer\s?/, "");
-  return jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+  const verified = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+  if (!verified) {
+    return res.status(404).json({
+      message: "Token verification failed!",
+    });
+  }
+  return verified;
 };
 
 const signToken = (user) => {
@@ -26,7 +32,9 @@ const removePasswordHashFromData = (user) => {
 
 export const getMe = async (req, res) => {
   try {
-    const found = await UserModel.findOne({ _id: decodeToken(req)._id }).lean();
+    const found = await UserModel.findOne({
+      _id: decodeToken(req, res)._id,
+    }).lean();
     res.json(found);
   } catch (err) {
     console.log(err);
@@ -88,7 +96,16 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
+    console.log(req.body);
     const password = req.body.password;
+    const repeatPassword = req.body.repeatPassword;
+
+    if (password !== repeatPassword) {
+      return res.status(400).json({
+        message: "Incorrect email or password!",
+      });
+    }
+
     const salt = await bcrypt.genSalt(8);
     const hash = await bcrypt.hash(password, salt);
 
@@ -115,7 +132,9 @@ export const register = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    const deleted = await UserModel.deleteOne({ _id: decodeToken(req)._id });
+    const deleted = await UserModel.deleteOne({
+      _id: decodeToken(req, res)._id,
+    });
     res.json(deleted);
   } catch (err) {}
 };

@@ -1,9 +1,9 @@
 import axios from "./axios";
 
-function setMe(userData) {
+const setMe = async (userData) => {
   if (typeof window !== "undefined") {
-    axios
-      .post(`/me`, userData, {
+    await axios
+      .post(`me`, userData, {
         headers: {
           Authentication: "Bearer " + localStorage.getItem("token"),
         },
@@ -13,6 +13,6 @@ function setMe(userData) {
         alert("Error occured while changing user data!");
       });
   }
-}
+};
 
 export default setMe;

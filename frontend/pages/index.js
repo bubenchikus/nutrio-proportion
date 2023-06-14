@@ -1,26 +1,22 @@
 import styles from "../styles/Index.module.scss";
 import axios from "../axios";
-import Grid from "../components/Grid";
-import GridHeader from "../components/GridHeader";
+import FullGrid from "../components/FullGrid";
 import { useState, useEffect } from "react";
 
-const Index = ({ userData, setUserData, loggedIn }) => {
-  const baseList = ["byWeight", "byCalories"];
-  const nutrientList = ["carb", "fiber", "protein", "fat"];
-  const sortList = ["asc", "desc"];
-
-  const [nutritionData, setNutritionData] = useState([]);
-  const [queryParams, setQueryParams] = useState([
-    "",
-    baseList[1],
-    nutrientList[2],
-    sortList[1],
-  ]);
-
+const Index = ({
+  queryParams,
+  setQueryParams,
+  lists,
+  loggedIn,
+  userData,
+  setUserData,
+  nutritionData,
+  setNutritionData,
+}) => {
   useEffect(() => {
     axios
       .get(
-        `/nutrition?description=${queryParams[0]}&base=${queryParams[1]}&key=${queryParams[2]}&sort=${queryParams[3]}`
+        `/nutrition?description=${queryParams?.description}&base=${queryParams?.base}&key=${queryParams?.key}&sort=${queryParams?.sort}`
       )
       .then((response) => {
         setNutritionData(response.data);
@@ -50,25 +46,15 @@ const Index = ({ userData, setUserData, loggedIn }) => {
   }, [loggedIn]);
 
   return (
-    <>
-      <GridHeader
-        queryParams={queryParams}
-        setQueryParams={setQueryParams}
-        baseList={baseList}
-        nutrientList={nutrientList}
-        sortList={sortList}
-        preferences={userData?.preferences}
-        loggedIn={loggedIn}
-      />
-      <Grid
-        data={nutritionData}
-        queryParams={queryParams}
-        nutrientList={nutrientList}
-        userData={userData}
-        setUserData={setUserData}
-        loggedIn={loggedIn}
-      />
-    </>
+    <FullGrid
+      queryParams={queryParams}
+      setQueryParams={setQueryParams}
+      lists={lists}
+      loggedIn={loggedIn}
+      nutritionData={nutritionData}
+      userData={userData}
+      setUserData={setUserData}
+    />
   );
 };
 

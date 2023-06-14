@@ -11,15 +11,15 @@ const Grid = ({
   setUserData,
   loggedIn,
 }) => {
-  const base = queryParams[1];
-  const nKey = queryParams[2];
+  const base = queryParams?.base;
+  const nKey = queryParams?.key;
 
-  var nutrients = nutrientList.slice(); // copy array
+  var nutrients = nutrientList?.slice(); // copy array
   if (nKey === "carb") {
-    nutrients.splice(nutrients.indexOf(nKey), 2);
+    nutrients?.splice(nutrients.indexOf(nKey), 2);
     nutrients = [nKey, "fiber"].concat(nutrients);
   } else {
-    nutrients.splice(nutrients.indexOf(nKey), 1);
+    nutrients?.splice(nutrients.indexOf(nKey), 1);
     nutrients = [nKey].concat(nutrients);
   }
 
@@ -37,7 +37,7 @@ const Grid = ({
           if (!userData.favourites?.includes(params.row._id)) {
             userData.favourites.push(params.row._id);
           } else {
-            userData.favourites.splice(
+            userData?.favourites?.splice(
               userData.favourites.indexOf(params.row._id),
               1
             );
@@ -48,7 +48,7 @@ const Grid = ({
           }));
           setMe(userData);
         } else if (!loggedIn && params.field === "fav") {
-          alert("You must be authorized to add favourites!");
+          alert("You must be logged in to add favourites!");
         }
       }}
       disableColumnResize={false}

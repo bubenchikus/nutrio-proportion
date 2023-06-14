@@ -27,6 +27,8 @@ const UserSchema = new mongoose.Schema({
       sort: "desc",
     },
   },
+
+  activated: { type: Boolean, required: true, default: false },
 });
 
 export default mongoose.model("User", UserSchema, "user");

@@ -5,32 +5,14 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 
-const GridHeader = ({
-  queryParams,
-  setQueryParams,
-  baseList,
-  nutrientList,
-  sortList,
-  preferences,
-  loggedIn,
-}) => {
-  const [searchQuery, setSearchQuery] = useState();
+const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
+  const [searchQuery, setSearchQuery] = useState("");
 
   const sendSearchQuery = () => {
-    setQueryParams([
-      searchQuery,
-      queryParams[1],
-      queryParams[2],
-      queryParams[3],
-    ]);
-  };
-
-  const resetTable = () => {
-    if (loggedIn) {
-      setQueryParams(["", preferences.base, preferences.key, preferences.sort]);
-    } else {
-      setQueryParams(["", baseList[1], nutrientList[2], sortList[1]]);
-    }
+    setQueryParams((prev) => ({
+      ...prev,
+      description: searchQuery,
+    }));
   };
 
   return (
@@ -52,7 +34,7 @@ const GridHeader = ({
                 }
               }}
             />
-            <Button onClick={sendSearchQuery} className="greyButton">
+            <Button onClick={() => sendSearchQuery()} className="greyButton">
               Search
             </Button>
           </div>
@@ -61,17 +43,16 @@ const GridHeader = ({
           <div className={styles.cellText}>Base:</div>
           <Select
             size="small"
-            defaultValue={queryParams[1]}
+            key={queryParams.base} // To force re-rendering!!!
+            defaultValue={queryParams.base}
             onChange={(e) => {
-              setQueryParams([
-                queryParams[0],
-                e.target.value,
-                queryParams[2],
-                queryParams[3],
-              ]);
+              setQueryParams((prev) => ({
+                ...prev,
+                base: e.target.value,
+              }));
             }}
           >
-            {baseList.map((el) => (
+            {lists.base.map((el) => (
               <MenuItem value={el} key={el}>
                 {el}
               </MenuItem>
@@ -82,17 +63,16 @@ const GridHeader = ({
           <div className={styles.cellText}>Key:</div>
           <Select
             size="small"
-            defaultValue={queryParams[2]}
+            key={queryParams.key}
+            defaultValue={queryParams.key}
             onChange={(e) => {
-              setQueryParams([
-                queryParams[0],
-                queryParams[1],
-                e.target.value,
-                queryParams[3],
-              ]);
+              setQueryParams((prev) => ({
+                ...prev,
+                key: e.target.value,
+              }));
             }}
           >
-            {nutrientList.map((el) => (
+            {lists.key.map((el) => (
               <MenuItem value={el} key={el}>
                 {el}
               </MenuItem>
@@ -103,17 +83,16 @@ const GridHeader = ({
           <div className={styles.cellText}>Sort:</div>
           <Select
             size="small"
-            defaultValue={queryParams[3]}
+            key={queryParams.sort}
+            defaultValue={queryParams.sort}
             onChange={(e) => {
-              setQueryParams([
-                queryParams[0],
-                queryParams[1],
-                queryParams[2],
-                e.target.value,
-              ]);
+              setQueryParams((prev) => ({
+                ...prev,
+                sort: e.target.value,
+              }));
             }}
           >
-            {sortList.map((el) => (
+            {lists.sort.map((el) => (
               <MenuItem value={el} key={el}>
                 {el}
               </MenuItem>
@@ -121,7 +100,10 @@ const GridHeader = ({
           </Select>
         </div>
         <div className={styles.cell}>
-          <Button onClick={resetTable} className="greyButton">
+          <Button
+            onClick={() => setQueryParams(preferences)}
+            className="greyButton"
+          >
             Reset table
           </Button>
         </div>
