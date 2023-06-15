@@ -1,7 +1,6 @@
-import styles from "../styles/Index.module.scss";
 import axios from "../axios";
 import FullGrid from "../components/FullGrid";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 const Index = ({
   queryParams,

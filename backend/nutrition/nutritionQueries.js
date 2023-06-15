@@ -54,29 +54,29 @@ export const getNutritionById = async (req, res) => {
   }
 };
 
-export const postNutrition = async (req, res) => {
-  try {
-    // const found = await NutritionModel.findOne({ _id: req.params.id });
-    const proportions = helpers.calculateProportions(
-      req.body.cals,
-      req.body.carb,
-      req.body.protein,
-      req.body.fat,
-      req.body.fiber
-    );
-    const posted = await NutritionModel.create({
-      description: req.body.description,
-      dataType: "User",
-      foodNutrients: {
-        byWeight: proportions[0],
-        byCalories: proportions[1],
-      },
-    });
-    res.json(posted);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Getting nutrition data from DB Failed!",
-    });
-  }
-};
+// export const postNutrition = async (req, res) => {
+//   try {
+//     // const found = await NutritionModel.findOne({ _id: req.params.id });
+//     const proportions = helpers.calculateProportions(
+//       req.body.cals,
+//       req.body.carb,
+//       req.body.protein,
+//       req.body.fat,
+//       req.body.fiber
+//     );
+//     const posted = await NutritionModel.create({
+//       description: req.body.description,
+//       dataType: "User",
+//       foodNutrients: {
+//         byWeight: proportions[0],
+//         byCalories: proportions[1],
+//       },
+//     });
+//     res.json(posted);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({
+//       message: "Getting nutrition data from DB Failed!",
+//     });
+//   }
+// };

@@ -1,5 +1,4 @@
 import { DataGrid } from "@mui/x-data-grid";
-import styles from "../styles/Grid.module.scss";
 import setupGridColumns from "./helpers/setupGridColumns";
 import setMe from "../setMe";
 

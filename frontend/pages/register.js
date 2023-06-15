@@ -7,21 +7,23 @@ const Register = ({ setLoggedIn, router }) => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
-  const handleSubmit = async () => {
-    await axios
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await axios
       .post("register", {
         email: email,
         password: password,
         repeatPassword: repeatPassword,
       })
       .then((data) => {
-        console.log(data.data.token);
         localStorage.setItem("token", data.data.token);
+        setLoggedIn(true);
+        router.push("/");
       })
       .catch((err) => {
-        console.warn(err);
-        alert("Something went wrong! Registration failed.");
+        alert(err.response.data[0]["msg"]);
       });
+    return res;
   };
 
   return (
@@ -30,10 +32,7 @@ const Register = ({ setLoggedIn, router }) => {
       <form
         className="rectangle"
         onSubmit={(e) => {
-          handleSubmit();
-          setLoggedIn(true);
-          e.preventDefault();
-          router.push("/");
+          handleSubmit(e);
         }}
       >
         <input

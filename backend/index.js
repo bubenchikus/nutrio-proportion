@@ -2,7 +2,11 @@ import express from "express";
 import mongoose from "mongoose";
 import * as NutritionQueries from "./nutrition/nutritionQueries.js";
 import * as UserQueries from "./user/userQueries.js";
-import { checkAuth } from "./auth.js";
+import { checkAuth } from "./middleware/auth.js";
+import {
+  registerValidation,
+  validationResultStatus,
+} from "./middleware/valid.js";
 import cors from "cors";
 
 import dotenv from "dotenv";
@@ -19,12 +23,17 @@ mongoose
   .catch((err) => console.log("Connection failed!", err));
 
 app.get("/nutrition", NutritionQueries.getNutrition); // filter with query parameters: asc/desc, priority nutrient by calories/weight proportion, word search
-app.post("/nutrition", checkAuth, NutritionQueries.postNutrition);
+// app.post("/nutrition", checkAuth, NutritionQueries.postNutrition);
 app.get("/nutrition/:id", NutritionQueries.getNutritionById);
 
 app.post("/login", UserQueries.login);
 
-app.post("/register", UserQueries.register);
+app.post(
+  "/register",
+  registerValidation,
+  validationResultStatus,
+  UserQueries.register
+);
 
 app.get("/me", checkAuth, UserQueries.getMe);
 app.post("/me", checkAuth, UserQueries.setMe);

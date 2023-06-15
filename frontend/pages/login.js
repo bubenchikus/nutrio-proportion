@@ -1,7 +1,6 @@
 import axios from "../axios";
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import Rectangle from "../components/Rectangle";
 import Link from "next/link";
 
 const Login = ({ setLoggedIn, router, setUserData }) => {
