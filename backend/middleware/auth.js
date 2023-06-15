@@ -9,11 +9,9 @@ export const checkAuth = (req, res, next) => {
       req.userId = decoded._id;
       next();
     } catch (err) {
-      return res
-        .status(403)
-        .json({ message: "No access (verification failed)!" });
+      return res.status(403).json({ msg: "No access (verification failed)!" });
     }
   } else {
-    return res.status(403).json({ message: "No access!" });
+    return res.status(403).json({ msg: "No access!" });
   }
 };

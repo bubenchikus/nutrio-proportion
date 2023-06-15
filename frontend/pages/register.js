@@ -15,13 +15,30 @@ const Register = ({ setLoggedIn, router }) => {
         password: password,
         repeatPassword: repeatPassword,
       })
-      .then((data) => {
+      .then(async (data) => {
         localStorage.setItem("token", data.data.token);
         setLoggedIn(true);
-        router.push("/");
+
+        await axios
+          .get("verify", {
+            headers: {
+              Authentication: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+          .catch((err) => {
+            console.warn(err);
+            alert("Something went wrong while sending verification code!");
+          });
+
+        router.push("/me/verification-pending");
       })
       .catch((err) => {
-        alert(err.response.data[0]["msg"]);
+        console.warn(err);
+        alert(
+          err.response.data?.msg ||
+            err.response.data[0]?.msg ||
+            "Something went wrong in the register process!"
+        );
       });
     return res;
   };
@@ -29,12 +46,7 @@ const Register = ({ setLoggedIn, router }) => {
   return (
     <div className="rectangle">
       <h1>Register</h1>
-      <form
-        className="rectangle"
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
+      <form className="rectangle" onSubmit={handleSubmit}>
         <input
           type="email"
           onChange={(e) => setEmail(e.target.value)}

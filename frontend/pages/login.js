@@ -17,8 +17,15 @@ const Login = ({ setLoggedIn, router, setUserData }) => {
         router.push("/");
       })
       .catch((err) => {
-        console.warn(err);
-        alert("Incorrect user/password!");
+        if (err.response?.status === 401) {
+          router.push("/me/verification");
+        } else {
+          alert(
+            err.response?.data?.msg ||
+              err.response?.data[0]?.msg ||
+              "Something went wrong in the login process!"
+          );
+        }
       });
   };
 

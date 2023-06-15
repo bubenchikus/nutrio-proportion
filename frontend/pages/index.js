@@ -26,24 +26,6 @@ const Index = ({
       });
   }, [queryParams]);
 
-  useEffect(() => {
-    if (loggedIn) {
-      axios
-        .get(`/me`, {
-          headers: {
-            Authentication: "Bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          setUserData(response.data);
-        })
-        .catch((err) => {
-          console.warn(err);
-          alert("Error occured while getting user data!");
-        });
-    }
-  }, [loggedIn]);
-
   return (
     <FullGrid
       queryParams={queryParams}

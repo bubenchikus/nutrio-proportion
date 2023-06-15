@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
     },
   },
 
-  verified: { type: Boolean, required: true, default: false },
+  isVerified: { type: Boolean, required: true, default: false },
 });
 
 export default mongoose.model("User", UserSchema, "user");

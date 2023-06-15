@@ -1,3 +1,5 @@
+// in case I'll implement user's cards functionality
+
 export const calculateProportions = (
   cals = 0,
   carb = 0,

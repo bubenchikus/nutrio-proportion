@@ -1,8 +1,9 @@
 import "../styles/global.scss";
 import Container from "@mui/material/Container";
 import Header from "../components/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import axios from "../axios";
 
 export default function MyApp({ Component, pageProps }) {
   const [userData, setUserData] = useState({});
@@ -23,6 +24,24 @@ export default function MyApp({ Component, pageProps }) {
   });
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (loggedIn) {
+      axios
+        .get(`/me`, {
+          headers: {
+            Authentication: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          setUserData(response.data);
+        })
+        .catch((err) => {
+          console.warn(err);
+          alert("Error occured while getting user data!");
+        });
+    }
+  }, [loggedIn]);
 
   return (
     <Container maxWidth="xl">
