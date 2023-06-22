@@ -17,7 +17,7 @@ const Login = ({ setLoggedIn, router, setUserData }) => {
         router.push("/");
       })
       .catch((err) => {
-        if (err.response?.status === 401) {
+        if (err.response?.status === 403) {
           router.push("/me/verification");
         } else {
           alert(

@@ -40,20 +40,25 @@ export const login = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email }).lean();
 
+    if (!user) {
+      // we should not let people know if email is registered or not
+      return res.status(401).json({ msg: "Incorrect email or password!" });
+    }
+
     const isValidPass = await bcrypt.compare(
       req.body.password,
       user.passwordHash
     );
 
     if (!isValidPass) {
-      return res.status(400).json({
+      return res.status(401).json({
         msg: "Incorrect email or password!",
       });
     }
 
     if (!user.isVerified) {
       return res
-        .status(401)
+        .status(403)
         .json({ msg: "Please verify your email to activate account!" });
     }
 
@@ -84,7 +89,7 @@ export const register = async (req, res) => {
 
     if (password !== repeatPassword) {
       return res.status(400).json({
-        msg: "Incorrect email or password!",
+        msg: "Passwords do not match!",
       });
     }
 

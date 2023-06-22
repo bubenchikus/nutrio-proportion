@@ -1,0 +1,33 @@
+name: Node.js CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy app using ssh
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{secrets.PASSWORD}}
+          port: 22
+          script: |
+            cd /nutrio-proportion
+            git pull origin main
+            git status
+
+            cd backend
+            pm2 restart nutrio
+            cd ..
+
+
+            cd frontend
+            npm i --force --no-optional
+            npm run build
+            rm -r /var/www/nutrio-proportion/frontend/*
+            cp -r build/* /var/www/nutrio-proportion/frontend/
+            cd ..

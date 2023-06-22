@@ -39,11 +39,7 @@ const Me = ({
   if (loggedIn) {
     return (
       <Container maxWidth="md" className="rectangle">
-        <h1>My data</h1>
-        <div className="dataRow">
-          <div>Mail:</div>
-          <div>{userData?.email}</div>
-        </div>
+        <h1>My preferences</h1>
         {editing ? (
           <form className="rectangle">
             {Object.keys(userData?.preferences).map((el) => {
@@ -74,7 +70,7 @@ const Me = ({
               onClick={() => setEditing(false)}
               type="submit"
             >
-              Submit data
+              Submit preferences
             </Button>
           </form>
         ) : (
@@ -93,15 +89,19 @@ const Me = ({
         ) : (
           <>
             <Button className="greyButton" onClick={() => setEditing(true)}>
-              Edit data
+              Edit preferences
             </Button>
             <Button
               className="redButton"
-              onClick={() => {
+              onClick={(e) => {
                 if (userData?._id === process.env.NEXT_PUBLIC_TEST_ID) {
                   alert("You can't delete test account!");
                 } else {
-                  handleClick;
+                  if (
+                    confirm("Are you sure you want to delete your account?")
+                  ) {
+                    handleClick(e);
+                  }
                 }
               }}
             >

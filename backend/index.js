@@ -45,8 +45,6 @@ app.post("/me/favourites", checkAuth);
 app.get("/verify", TokenQueries.sendVerificationToken);
 app.get("/verify/:token", TokenQueries.recieveVerificationToken);
 
-// app.use("/pictures", express.static("pictures"));
-
 app.listen(process.env.PORT, (err) => {
   if (err) {
     return console.log(err);

@@ -26,36 +26,46 @@ export const signToken = (user, expires = "30d") => {
   );
 };
 
+async function sendVerificationEmail(userEmail, token) {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.beget.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.MAIL_USER,
+    to: userEmail,
+    subject: "Nutrio-proportion - account verification",
+
+    text: `Your verification link: ${process.env.VERIFICATION_PAGE}/${token}`,
+  };
+
+  await transporter.sendMail(mailOptions);
+}
+
 export const sendVerificationToken = async (req, res) => {
   try {
+    const oldToken = await TokenModel.findById(decodeToken(req, res)._id);
+
+    if (oldToken) {
+      await TokenModel.findByIdAndDelete(decodeToken(req, res)._id);
+    }
+
     const user = await UserModel.findById(decodeToken(req, res)._id).lean();
 
     const token = signToken(user._id, "1d");
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.beget.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASSWORD,
-      },
-    });
-
-    var mailOptions = {
-      from: process.env.MAIL_USER,
-      to: user.email,
-      subject: "Nutrio-proportion - account verification",
-
-      text: `Your verification link: ${process.env.VERIFICATION_PAGE}/${token}`,
-    };
-
-    await transporter.sendMail(mailOptions);
 
     await new TokenModel({
       _id: user._id,
       token: token,
     }).save();
+
+    sendVerificationEmail(user.email, token);
 
     res.status(200).json("Verification token successfully sent!");
   } catch (err) {

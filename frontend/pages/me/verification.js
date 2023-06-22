@@ -1,9 +1,10 @@
 import Button from "@mui/material/Button";
 import axios from "../../axios";
 
-const Verification = ({ router, userData }) => {
+const Verification = ({ router }) => {
   const handleClick = async (e) => {
     e.preventDefault();
+
     await axios
       .get("verify", {
         headers: {

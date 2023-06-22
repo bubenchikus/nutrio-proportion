@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import axios from "../../../axios";
 
-const VerificationRecieved = ({ router }) => {
+const VerificationRecieved = ({ setLoggedIn, router }) => {
   console.log(router.query.token);
 
   useEffect(() => {
@@ -9,6 +9,7 @@ const VerificationRecieved = ({ router }) => {
     axios
       .get(`/verify/${router.query.token}`)
       .then(() => {
+        setLoggedIn(true);
         router.push("/");
       })
       .catch((err) => {

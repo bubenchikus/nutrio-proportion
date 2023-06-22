@@ -17,7 +17,6 @@ const Register = ({ setLoggedIn, router }) => {
       })
       .then(async (data) => {
         localStorage.setItem("token", data.data.token);
-        setLoggedIn(true);
 
         await axios
           .get("verify", {
