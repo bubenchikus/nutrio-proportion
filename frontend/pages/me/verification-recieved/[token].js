@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import axios from "../../../axios";
 
 const VerificationRecieved = ({ setLoggedIn, router }) => {
-  console.log(router.query.token);
-
   useEffect(() => {
     if (!router.isReady) return;
     axios
@@ -13,8 +11,6 @@ const VerificationRecieved = ({ setLoggedIn, router }) => {
         router.push("/");
       })
       .catch((err) => {
-        console.log(router.query.token);
-        console.warn(err);
         alert(
           err.response.data?.msg ||
             "Something went wrong in verification process!"

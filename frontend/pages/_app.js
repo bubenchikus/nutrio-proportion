@@ -21,6 +21,7 @@ export default function MyApp({ Component, pageProps }) {
     base: baseList[1],
     key: nutrientList[2],
     sort: sortList[1],
+    page: 0,
   });
 
   const router = useRouter();
@@ -37,7 +38,6 @@ export default function MyApp({ Component, pageProps }) {
           setUserData(response.data);
         })
         .catch((err) => {
-          console.warn(err);
           alert("Error occured while getting user data!");
         });
     }

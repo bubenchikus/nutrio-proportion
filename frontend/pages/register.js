@@ -25,14 +25,12 @@ const Register = ({ setLoggedIn, router }) => {
             },
           })
           .catch((err) => {
-            console.warn(err);
             alert("Something went wrong while sending verification code!");
           });
 
         router.push("/me/verification-pending");
       })
       .catch((err) => {
-        console.warn(err);
         alert(
           err.response.data?.msg ||
             err.response.data[0]?.msg ||

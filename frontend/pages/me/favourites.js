@@ -21,7 +21,6 @@ const Favourites = ({
           setFavourites((prev) => [...prev, response.data]);
         })
         .catch((err) => {
-          console.warn(err);
           alert("Error occured while getting user data!");
         });
     });

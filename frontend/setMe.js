@@ -9,7 +9,6 @@ const setMe = async (userData) => {
         },
       })
       .catch((err) => {
-        console.warn(err);
         alert("Error occured while changing user data!");
       });
   }

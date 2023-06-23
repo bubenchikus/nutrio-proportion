@@ -1,13 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
-import * as NutritionQueries from "./nutrition/nutritionQueries.js";
-import * as UserQueries from "./user/userQueries.js";
-import * as TokenQueries from "./user/tokenQueries.js";
-import { checkAuth } from "./middleware/auth.js";
+import * as NutritionQueries from "./src/nutrition/nutritionQueries.js";
+import * as UserQueries from "./src/user/userQueries.js";
+import * as TokenQueries from "./src/user/tokenQueries.js";
+import { checkAuth } from "./src/middleware/auth.js";
 import {
   registerValidation,
   validationResultStatus,
-} from "./middleware/valid.js";
+} from "./src/middleware/valid.js";
 import cors from "cors";
 
 import dotenv from "dotenv";

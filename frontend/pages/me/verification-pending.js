@@ -11,7 +11,6 @@ const VerificationPending = ({}) => {
         },
       })
       .catch((err) => {
-        console.warn(err);
         alert("Something went wrong while sending verification code!");
       });
   };

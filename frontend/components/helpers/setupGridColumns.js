@@ -75,7 +75,7 @@ const setupGridColumns = (nutrients, base, userData) => {
       headerAlign: "center",
       disableColumnMenu: true,
       renderCell: (params) => {
-        return Object.keys(params.row.foodNutrients.proportions[base]).length >
+        return Object.keys(params.row.foodNutrients.proportions[base])?.length >
           0 ? (
           <HSBar
             showTextIn

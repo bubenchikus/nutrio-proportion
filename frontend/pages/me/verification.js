@@ -15,7 +15,6 @@ const Verification = ({ router }) => {
         router.push("/me/verification-pending");
       })
       .catch((err) => {
-        console.warn(err);
         alert("Something went wrong while sending verification code!");
       });
   };

@@ -35,6 +35,7 @@ const FullGrid = ({
       <Grid
         data={nutritionData}
         queryParams={queryParams}
+        setQueryParams={setQueryParams}
         nutrientList={lists?.key}
         userData={userData}
         setUserData={setUserData}

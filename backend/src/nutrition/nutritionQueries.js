@@ -31,8 +31,15 @@ export const getNutrition = async (req, res) => {
       },
     });
 
+    const pageSize = 10;
+    const page = req.query.page ?? 0;
+
+    const dataLength = (await NutritionModel.aggregate(pipeline)).length;
+
+    pipeline.push({ $skip: pageSize * page }, { $limit: pageSize });
+
     const found = await NutritionModel.aggregate(pipeline);
-    res.json(found);
+    res.json({ data: found, dataLength: dataLength, pageSize: pageSize });
   } catch (err) {
     console.log(err);
     res.status(500).json({

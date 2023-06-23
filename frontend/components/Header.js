@@ -25,7 +25,7 @@ const Header = ({ keywords, loggedIn, setLoggedIn, router, setUserData }) => {
           href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500&family=Roboto:wght@100;300;400;500;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="shortcut icon" href="/images/favicon.ico" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

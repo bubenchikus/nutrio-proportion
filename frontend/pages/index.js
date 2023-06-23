@@ -15,13 +15,12 @@ const Index = ({
   useEffect(() => {
     axios
       .get(
-        `/nutrition?description=${queryParams?.description}&base=${queryParams?.base}&key=${queryParams?.key}&sort=${queryParams?.sort}`
+        `/nutrition?description=${queryParams?.description}&base=${queryParams?.base}&key=${queryParams?.key}&sort=${queryParams?.sort}&page=${queryParams?.page}`
       )
       .then((response) => {
         setNutritionData(response.data);
       })
       .catch((err) => {
-        console.warn(err);
         alert("Error occured while getting nutrition data!");
       });
   }, [queryParams]);

@@ -31,7 +31,6 @@ const Me = ({
         router.push("/");
       })
       .catch((err) => {
-        console.warn(err);
         alert("Something went wrong while deleting user!");
       });
   };
