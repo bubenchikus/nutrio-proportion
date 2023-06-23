@@ -27,9 +27,10 @@ jobs:
 
 
             cd frontend
-            pm2 restart nutrio-nextjs
+            rm -r node_modules
             npm i --force --no-optional
+            pm2 restart nutrio-nextjs
+            rm -r .next
             npm run build
             rm -r /var/www/bubengogh/nutrio/*
             cp -r .next/* /var/www/bubengogh/nutrio/
-            cd ..
