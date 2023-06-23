@@ -21,13 +21,15 @@ jobs:
             git status
 
             cd backend
+            npm i --force --no-optional
             pm2 restart nutrio
             cd ..
 
 
             cd frontend
+            pm2 restart nutrio-nextjs
             npm i --force --no-optional
             npm run build
-            rm -r /var/www/nutrio-proportion/frontend/*
-            cp -r build/* /var/www/nutrio-proportion/frontend/
+            rm -r /var/www/bubengogh/nutrio/*
+            cp -r .next/* /var/www/bubengogh/nutrio/
             cd ..
