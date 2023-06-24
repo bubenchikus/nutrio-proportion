@@ -7,7 +7,7 @@ export const decodeToken = (req, res) => {
   const token = (req.headers.authentication || "").replace(/Bearer\s?/, "");
   const verified = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
   if (!verified) {
-    res.status(404).json({
+    res.status(500).json({
       msg: "Token verification failed!",
     });
   }
@@ -27,25 +27,32 @@ export const signToken = (user, expires = "30d") => {
 };
 
 async function sendVerificationEmail(userEmail, token) {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.beget.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASSWORD,
-    },
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.beget.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
 
-  var mailOptions = {
-    from: process.env.MAIL_USER,
-    to: userEmail,
-    subject: "Nutrio-proportion - account verification",
+    var mailOptions = {
+      from: process.env.MAIL_USER,
+      to: userEmail,
+      subject: "Nutrio-proportion - account verification",
 
-    text: `Your verification link: ${process.env.VERIFICATION_PAGE}/${token}`,
-  };
+      text: `Your verification link: ${process.env.VERIFICATION_PAGE}/${token}`,
+    };
 
-  await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      msg: "Something went wrong while configuring or sending verification email! You can try to resend token at any time.",
+    });
+  }
 }
 
 export const sendVerificationToken = async (req, res) => {
@@ -67,11 +74,11 @@ export const sendVerificationToken = async (req, res) => {
 
     sendVerificationEmail(user.email, token);
 
-    res.status(200).json("Verification token successfully sent!");
+    res.json("Verification token successfully sent!");
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      msg: "Something went wrong while sending verification token! You can resend token to try again.",
+      msg: "Something went wrong while creating or sending verification token! You can try to resend token at any time.",
     });
   }
 };
@@ -81,7 +88,7 @@ export const recieveVerificationToken = async (req, res) => {
     const foundToken = await TokenModel.findOne({ token: req.params.token });
 
     if (!foundToken) {
-      return res.status(400).json({
+      return res.status(500).json({
         msg: "Your token was not found in DB! It may be expired.",
       });
     }
@@ -98,14 +105,14 @@ export const recieveVerificationToken = async (req, res) => {
         msg: "User is not found. Please sign up.",
       });
     } else if (foundUser.isVerified) {
-      res.status(200).json("User is already verified!");
+      res.json("User is already verified!");
     }
 
     await UserModel.updateOne({ _id: userId }, { isVerified: true });
 
     await TokenModel.findByIdAndDelete(userId);
 
-    res.status(200).json("Your account has been successfully verified");
+    res.json("Your account has been successfully verified");
   } catch (err) {
     res.status(500).json({
       msg: "Something went wrong in verification process! Please try again.",

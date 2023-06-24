@@ -57,9 +57,9 @@ export const login = async (req, res) => {
     }
 
     if (!user.isVerified) {
-      return res
-        .status(403)
-        .json({ msg: "Please verify your email to activate account!" });
+      return res.status(403).json({
+        msg: "Please verify your email to activate account and view user data!",
+      });
     }
 
     const token = tokenQueries.signToken(user);
@@ -113,5 +113,10 @@ export const deleteUser = async (req, res) => {
       _id: tokenQueries.decodeToken(req, res)._id,
     });
     res.json(deleted);
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      msg: "User deletion failed!",
+    });
+  }
 };

@@ -23,5 +23,8 @@
     "react-dom": "^18.2.0",
     "react-horizontal-stacked-bar-chart": "^8.15.2",
     "sass": "^1.62.1"
+  },
+  "devDependencies": {
+    "gzipper": "^7.2.0"
   }
 }
