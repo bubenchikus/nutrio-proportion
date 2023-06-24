@@ -25,7 +25,11 @@ const Grid = ({
   }
 
   if (!data.data) {
-    return <></>;
+    return (
+      <div className="rectangle">
+        <h1>No data available...</h1>
+      </div>
+    );
   } else {
     return (
       <>
@@ -74,6 +78,7 @@ const Grid = ({
           }}
           variant="outlined"
           shape="rounded"
+          page={queryParams.page + 1}
           count={Math.ceil(data?.dataLength / data?.pageSize)}
           showFirstButton={true}
           showLastButton={true}

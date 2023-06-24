@@ -23,12 +23,14 @@ const FullGrid = ({
                 base: userData.preferences?.base,
                 key: userData.preferences?.key,
                 sort: userData.preferences?.sort,
+                page: 0,
               }
             : {
                 description: "",
                 base: lists.base[1],
                 key: lists.key[2],
                 sort: lists.sort[1],
+                page: 0,
               }
         }
       />

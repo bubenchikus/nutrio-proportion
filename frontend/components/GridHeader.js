@@ -12,6 +12,7 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
     setQueryParams((prev) => ({
       ...prev,
       description: searchQuery,
+      page: 0,
     }));
   };
 
@@ -49,6 +50,7 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
               setQueryParams((prev) => ({
                 ...prev,
                 base: e.target.value,
+                page: 0,
               }));
             }}
           >
@@ -69,6 +71,7 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
               setQueryParams((prev) => ({
                 ...prev,
                 key: e.target.value,
+                page: 0,
               }));
             }}
           >
@@ -89,6 +92,7 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
               setQueryParams((prev) => ({
                 ...prev,
                 sort: e.target.value,
+                page: 0,
               }));
             }}
           >

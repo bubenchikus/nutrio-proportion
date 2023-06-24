@@ -3,7 +3,7 @@ import axios from "./axios";
 const setMe = async (userData) => {
   if (typeof window !== "undefined") {
     await axios
-      .post(`me`, userData, {
+      .post("me", userData, {
         headers: {
           Authentication: "Bearer " + localStorage.getItem("token"),
         },

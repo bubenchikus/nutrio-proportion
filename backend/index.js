@@ -6,6 +6,8 @@ import * as TokenQueries from "./src/user/tokenQueries.js";
 import { checkAuth } from "./src/middleware/auth.js";
 import {
   registerValidation,
+  meValidation,
+  queryValidation,
   validationResultStatus,
 } from "./src/middleware/valid.js";
 import cors from "cors";
@@ -23,7 +25,12 @@ mongoose
   .then(() => console.log("Succesfully connected to DB..."))
   .catch((err) => console.log("Connection failed!", err));
 
-app.get("/nutrition", NutritionQueries.getNutrition); // filter with query parameters: asc/desc, priority nutrient by calories/weight proportion, word search
+app.get(
+  "/nutrition",
+  queryValidation,
+  validationResultStatus,
+  NutritionQueries.getNutrition
+); // filter with query parameters: asc/desc, priority nutrient by calories/weight proportion, word search
 app.get("/nutrition/:id", NutritionQueries.getNutritionById);
 
 app.post("/login", UserQueries.login);
@@ -36,11 +43,16 @@ app.post(
 );
 
 app.get("/me", checkAuth, UserQueries.getMe);
-app.post("/me", checkAuth, UserQueries.setMe);
+app.post(
+  "/me",
+  checkAuth,
+  meValidation,
+  validationResultStatus,
+  UserQueries.setMe
+);
 app.delete("/me", checkAuth, UserQueries.deleteUser);
 
 app.get("/me/favourites", checkAuth);
-app.post("/me/favourites", checkAuth);
 
 app.get("/verify", TokenQueries.sendVerificationToken);
 app.get("/verify/:token", TokenQueries.recieveVerificationToken);

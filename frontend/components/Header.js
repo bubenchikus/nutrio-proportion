@@ -25,25 +25,25 @@ const Header = ({ keywords, loggedIn, setLoggedIn, router, setUserData }) => {
           href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500&family=Roboto:wght@100;300;400;500;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="shortcut icon" href="/images/favicon.ico" />
+        <link rel="shortcut icon" href="favicon.ico" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/images/apple-touch-icon.png"
+          href="apple-touch-icon.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/images/favicon-32x32.png"
+          href="favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/images/favicon-16x16.png"
+          href="favicon-16x16.png"
         />
-        {/* <link rel="manifest" href="/public/images/site.webmanifest" /> */}
+        <link rel="manifest" href="site.webmanifest" />
 
         <title>Nutrio-proportion</title>
       </Head>

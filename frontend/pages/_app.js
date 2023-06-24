@@ -1,4 +1,4 @@
-import "../styles/global.scss";
+import "../styles/global.css";
 import Container from "@mui/material/Container";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";

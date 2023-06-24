@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import axios from "../axios";
 
-const Register = ({ setLoggedIn, router }) => {
+const Register = ({ router }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");

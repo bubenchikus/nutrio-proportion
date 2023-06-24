@@ -16,7 +16,7 @@ export const getMe = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      msg: "Getting nutrition data from DB Failed!",
+      msg: "Fetching user data failed!",
     });
   }
 };
@@ -31,7 +31,7 @@ export const setMe = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      msg: "Getting nutrition data from DB Failed!",
+      msg: "Patching user data failed!",
     });
   }
 };
@@ -84,17 +84,9 @@ export const register = async (req, res) => {
         msg: "User with this email already exists!",
       });
     }
-    const password = req.body.password;
-    const repeatPassword = req.body.repeatPassword;
-
-    if (password !== repeatPassword) {
-      return res.status(400).json({
-        msg: "Passwords do not match!",
-      });
-    }
 
     const salt = await bcrypt.genSalt(8);
-    const hash = await bcrypt.hash(password, salt);
+    const hash = await bcrypt.hash(req.body.password, salt);
 
     const user = await new UserModel({
       email: req.body.email,

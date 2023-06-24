@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 
-const Login = ({ setLoggedIn, router, setUserData }) => {
+const Login = ({ setLoggedIn, router }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
