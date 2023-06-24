@@ -31,11 +31,11 @@ const Header = ({ keywords, loggedIn, setLoggedIn, router, setUserData }) => {
           rel="stylesheet"
         />
 
-        <link rel="shortcut icon" href={shortcutIcon} />
-        <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
-        <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
-        <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
-        <link rel="manifest" href="../public/site.webmanifest" />
+        <Image rel="shortcut icon" href={shortcutIcon} />
+        <Image rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
+        <Image rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+        <Image rel="icon" type="image/png" sizes="16x16" href={favicon16} />
+        <Link rel="manifest" href="../public/site.webmanifest" />
 
         <title>Nutrio-proportion</title>
       </Head>
