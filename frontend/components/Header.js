@@ -4,6 +4,11 @@ import Image from "next/image";
 import barIcon from "../public/barIcon.svg";
 import Link from "next/link";
 
+import shortcutIcon from "../public/favicon.ico";
+import appleTouchIcon from "../public/apple-touch-icon.png";
+import favicon16 from "../public/favicon-16x16.png";
+import favicon32 from "../public/favicon-32x32.png";
+
 const Header = ({ keywords, loggedIn, setLoggedIn, router, setUserData }) => {
   return (
     <>
@@ -25,24 +30,11 @@ const Header = ({ keywords, loggedIn, setLoggedIn, router, setUserData }) => {
           href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500&family=Roboto:wght@100;300;400;500;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="shortcut icon" href="../public/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="../public/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="../public/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="favicon-16x16.png"
-        />
+
+        <link rel="shortcut icon" href={shortcutIcon} />
+        <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
+        <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+        <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
         <link rel="manifest" href="../public/site.webmanifest" />
 
         <title>Nutrio-proportion</title>
