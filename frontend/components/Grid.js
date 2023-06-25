@@ -3,7 +3,7 @@ import Pagination from "@mui/material/Pagination";
 import setupGridColumns from "./helpers/setupGridColumns";
 import setMe from "../setMe";
 import CircularProgress from "@mui/material/CircularProgress";
-import styles from "../styles/Universal.module.scss";
+import styles from "./helpers/setMUIStyles";
 
 const Grid = ({
   data,

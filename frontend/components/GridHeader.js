@@ -1,10 +1,10 @@
-import styles from "../styles/GridHeader.module.scss";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
-import universalStyles from "../styles/Universal.module.scss";
+import styles from "../styles/GridHeader.module.scss";
+import MUIStyles from "./helpers/setMUIStyles";
 
 const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,10 +36,7 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
                 }
               }}
             />
-            <Button
-              onClick={() => sendSearchQuery()}
-              className={universalStyles.greyButton}
-            >
+            <Button onClick={() => sendSearchQuery()} sx={MUIStyles.greyButton}>
               Search
             </Button>
           </div>
@@ -110,7 +107,7 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
         <div className={styles.cell}>
           <Button
             onClick={() => setQueryParams(preferences)}
-            className={universalStyles.greyButton}
+            sx={MUIStyles.greyButton}
           >
             Reset table
           </Button>

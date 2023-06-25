@@ -31,5 +31,5 @@ jobs:
             rm -r /var/www/bubengogh/nutrio/*
             cp -r .next/* /var/www/bubengogh/nutrio/
 
-            pm2 restart nutrio
-            pm2 restart nutrio-nextjs
+            /root/.nvm/versions/node/v16.20.0/bin/pm2 restart nutrio
+            /root/.nvm/versions/node/v16.20.0/bin/pm2 restart nutrio-nextjs

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import axios from "../axios";
-import styles from "../styles/Universal.module.scss";
+import MUIStyles from "../components/helpers/setMUIStyles";
+import universalStyles from "../styles/Universal.module.scss";
 
 const Register = ({ router }) => {
   const [email, setEmail] = useState("");
@@ -42,9 +43,9 @@ const Register = ({ router }) => {
   };
 
   return (
-    <div className={styles.rectangle}>
+    <div className={universalStyles.rectangle}>
       <h1>Register</h1>
-      <form className={styles.rectangle} onSubmit={handleSubmit}>
+      <form className={universalStyles.rectangle} onSubmit={handleSubmit}>
         <input
           type="email"
           onChange={(e) => setEmail(e.target.value)}
@@ -60,7 +61,7 @@ const Register = ({ router }) => {
           onChange={(e) => setRepeatPassword(e.target.value)}
           placeholder="repeat password"
         />
-        <Button className={styles.greyButton} type="submit">
+        <Button sx={MUIStyles.greyButton} type="submit">
           Register
         </Button>
       </form>

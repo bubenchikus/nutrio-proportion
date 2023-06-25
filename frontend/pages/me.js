@@ -6,7 +6,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import setMe from "../setMe";
 import axios from "../axios";
-import styles from "../styles/Universal.module.scss";
+import MUIStyles from "../components/helpers/setMUIStyles";
+import universalStyles from "../styles/Universal.module.scss";
 
 const Me = ({
   userData,
@@ -39,13 +40,13 @@ const Me = ({
 
   if (loggedIn) {
     return (
-      <Container maxWidth="md" className={styles.rectangle}>
+      <Container maxWidth="md" sx={MUIStyles.rectangle}>
         <h1>My preferences</h1>
         {editing ? (
-          <form className={styles.rectangle}>
+          <form className={universalStyles.rectangle}>
             {Object.keys(userData?.preferences).map((el) => {
               return (
-                <div className={styles.dataRow}>
+                <div className={universalStyles.dataRow}>
                   <div>{el}:</div>
                   <Select
                     size="small"
@@ -67,7 +68,7 @@ const Me = ({
               );
             })}
             <Button
-              className={styles.greyButton}
+              sx={MUIStyles.greyButton}
               onClick={() => setEditing(false)}
               type="submit"
             >
@@ -75,9 +76,9 @@ const Me = ({
             </Button>
           </form>
         ) : (
-          Object.keys(userData?.preferences).map((el) => {
+          Object.keys(userData?.preferences ?? {}).map((el) => {
             return (
-              <div className={styles.dataRow}>
+              <div className={universalStyles.dataRow}>
                 <div>{el}:</div>
                 <div>{userData?.preferences[el]}</div>
               </div>
@@ -89,14 +90,11 @@ const Me = ({
           <></>
         ) : (
           <>
-            <Button
-              className={styles.greyButton}
-              onClick={() => setEditing(true)}
-            >
+            <Button sx={MUIStyles.greyButton} onClick={() => setEditing(true)}>
               Edit preferences
             </Button>
             <Button
-              className={styles.redButton}
+              sx={MUIStyles.redButton}
               onClick={(e) => {
                 if (userData?._id === process.env.NEXT_PUBLIC_TEST_ID) {
                   alert("You can't delete test account!");

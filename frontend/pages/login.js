@@ -2,7 +2,8 @@ import axios from "../axios";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import Link from "next/link";
-import styles from "../styles/Universal.module.scss";
+import universalStyles from "../styles/Universal.module.scss";
+import MUIStyles from "../components/helpers/setMUIStyles";
 
 const Login = ({ setLoggedIn, router }) => {
   const [email, setEmail] = useState("");
@@ -31,9 +32,9 @@ const Login = ({ setLoggedIn, router }) => {
   };
 
   return (
-    <div className={styles.rectangle}>
+    <div className={universalStyles.rectangle}>
       <h1>Log in</h1>
-      <form className={styles.rectangle} onSubmit={handleSubmit}>
+      <form className={universalStyles.rectangle} onSubmit={handleSubmit}>
         <input
           type="email"
           onChange={(e) => setEmail(e.target.value)}
@@ -45,13 +46,13 @@ const Login = ({ setLoggedIn, router }) => {
           placeholder="password"
         />
         <div>
-          <Button type="submit" className={styles.greyButton}>
+          <Button type="submit" sx={MUIStyles.greyButton}>
             Go!
           </Button>
         </div>
       </form>
       <Link href="/register">
-        <Button className={styles.greyButton}>Register</Button>
+        <Button sx={MUIStyles.greyButton}>Register</Button>
       </Link>
     </div>
   );

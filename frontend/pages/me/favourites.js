@@ -13,7 +13,7 @@ const Favourites = ({
   loading,
   setLoading,
 }) => {
-  const [favourites, setFavourites] = useState();
+  const [favourites, setFavourites] = useState({});
   const [favouritesData, setFavouritesData] = useState([]);
 
   useEffect(() => {
