@@ -3,6 +3,7 @@ import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
   return (
     <Html lang="en">
+      <title>Nutrio-proportion</title>
       <Head>
         <meta keywords={"nutrio-proportion, nutrition, foods-rating"}></meta>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,8 +39,6 @@ export default function Document() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-
-        <title>Nutrio-proportion</title>
       </Head>
       <body>
         <Main />
