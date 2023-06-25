@@ -27,6 +27,7 @@ const Me = ({
         },
       })
       .then(() => {
+        localStorage.removeItem("token");
         setLoggedIn(false);
         router.push("/");
       })

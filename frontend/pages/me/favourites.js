@@ -11,20 +11,29 @@ const Favourites = ({
   userData,
   setUserData,
 }) => {
-  const [favourites, setFavourites] = useState([]);
+  const [favourites, setFavourites] = useState();
+  const [favouritesData, setFavouritesData] = useState([]);
 
   useEffect(() => {
     userData?.favourites?.forEach(async (id) => {
       await axios
         .get(`/nutrition/${id}`)
         .then((response) => {
-          setFavourites((prev) => [...prev, response.data]);
+          setFavouritesData((prev) => [...prev, response.data]);
         })
         .catch((err) => {
           alert("Error occured while getting user data!");
         });
     });
   }, []);
+
+  useEffect(() => {
+    setFavourites({
+      data: favouritesData,
+      dataLength: favouritesData.length,
+      pageSize: 10,
+    });
+  }, [favouritesData]);
 
   if (loggedIn) {
     return (

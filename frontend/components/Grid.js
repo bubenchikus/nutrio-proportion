@@ -24,7 +24,7 @@ const Grid = ({
     nutrients = [nKey].concat(nutrients);
   }
 
-  if (!data.data) {
+  if (!data?.data) {
     return (
       <div className="rectangle">
         <h1>No data available...</h1>
