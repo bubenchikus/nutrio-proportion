@@ -21,15 +21,12 @@ jobs:
             git status
 
             cd backend
-            npm i --force --no-optional
+            npm i
             pm2 restart nutrio
             cd ..
 
-
             cd frontend
-            rm -r node_modules
-            rm package-lock.json
-            npm i --force --no-optional
+            npm i
             pm2 restart nutrio-nextjs
             rm -r .next
             npm run build
