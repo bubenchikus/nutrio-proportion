@@ -3,7 +3,7 @@ import Pagination from "@mui/material/Pagination";
 import setupGridColumns from "./helpers/setupGridColumns";
 import setMe from "../setMe";
 import CircularProgress from "@mui/material/CircularProgress";
-import styles from "./helpers/setMUIStyles";
+import universalStyles from "../styles/Universal.module.scss";
 
 const Grid = ({
   data,
@@ -29,7 +29,7 @@ const Grid = ({
 
   if (!data?.data || loading) {
     return (
-      <div className={styles.centerAlert}>
+      <div className={universalStyles.centerAlert}>
         <CircularProgress />
       </div>
     );
