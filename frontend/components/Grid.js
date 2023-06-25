@@ -2,7 +2,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import setupGridColumns from "./helpers/setupGridColumns";
 import setMe from "../setMe";
-import SyncLoader from "react-spinners/SyncLoader";
+import CircularProgress from "@mui/material/CircularProgress";
+import styles from "../styles/Universal.module.scss";
 
 const Grid = ({
   data,
@@ -26,16 +27,12 @@ const Grid = ({
     nutrients = [nKey].concat(nutrients);
   }
 
-  if (loading) {
+  if (!data?.data || loading) {
     return (
-      <div className="centerAlert">
-        <SyncLoader color="grey" />
+      <div className={styles.centerAlert}>
+        <CircularProgress />
       </div>
     );
-  } else if (!data?.data) {
-    <div className="rectangle">
-      <h1>No data available!</h1>
-    </div>;
   } else {
     return (
       <>

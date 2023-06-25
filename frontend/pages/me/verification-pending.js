@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import axios from "../../axios";
+import styles from "../../styles/Universal.module.scss";
 
 const VerificationPending = ({}) => {
   const handleClick = async (e) => {
@@ -16,9 +17,9 @@ const VerificationPending = ({}) => {
   };
 
   return (
-    <div className="rectangle">
+    <div className={styles.rectangle}>
       <h1>We send you verification link! Please check your email.</h1>
-      <Button className="greyButton" onClick={handleClick}>
+      <Button className={styles.greyButton} onClick={handleClick}>
         Re-send link
       </Button>
     </div>

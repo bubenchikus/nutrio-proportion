@@ -2,6 +2,7 @@ import axios from "../axios";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import styles from "../styles/Universal.module.scss";
 
 const Login = ({ setLoggedIn, router }) => {
   const [email, setEmail] = useState("");
@@ -30,9 +31,9 @@ const Login = ({ setLoggedIn, router }) => {
   };
 
   return (
-    <div className="rectangle">
+    <div className={styles.rectangle}>
       <h1>Log in</h1>
-      <form className="rectangle" onSubmit={handleSubmit}>
+      <form className={styles.rectangle} onSubmit={handleSubmit}>
         <input
           type="email"
           onChange={(e) => setEmail(e.target.value)}
@@ -44,13 +45,13 @@ const Login = ({ setLoggedIn, router }) => {
           placeholder="password"
         />
         <div>
-          <Button type="submit" className="greyButton">
+          <Button type="submit" className={styles.greyButton}>
             Go!
           </Button>
         </div>
       </form>
       <Link href="/register">
-        <Button className="greyButton">Register</Button>
+        <Button className={styles.greyButton}>Register</Button>
       </Link>
     </div>
   );

@@ -1,10 +1,11 @@
 import Button from "@mui/material/Button";
+import styles from "../styles/Universal.module.scss";
 
 const LoginAlert = ({ warning }) => {
   return (
-    <div className="centerAlert">
+    <div className={styles.centerAlert}>
       <h1>{warning}</h1>
-      <Button className="greyButton" href="/login">
+      <Button className={styles.greyButton} href="/login">
         Log in
       </Button>
     </div>

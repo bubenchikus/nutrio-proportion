@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import axios from "../../axios";
+import styles from "../../styles/Universal.module.scss";
 
 const Verification = ({ router }) => {
   const handleClick = async (e) => {
@@ -20,9 +21,9 @@ const Verification = ({ router }) => {
   };
 
   return (
-    <div className="rectangle">
+    <div className={styles.rectangle}>
       <h1>Please verify your account email to use full functionality!</h1>
-      <Button type="submit" className="greyButton" onClick={handleClick}>
+      <Button type="submit" className={styles.greyButton} onClick={handleClick}>
         Receive link
       </Button>
     </div>

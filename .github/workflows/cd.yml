@@ -1,4 +1,4 @@
-name: Node.js CD
+name: Next.js CD
 
 on:
   push:
@@ -22,13 +22,14 @@ jobs:
 
             cd backend
             npm ci
-            pm2 restart nutrio
             cd ..
 
             cd frontend
             npm ci
-            pm2 restart nutrio-nextjs
             rm -r .next
             npm run build
             rm -r /var/www/bubengogh/nutrio/*
             cp -r .next/* /var/www/bubengogh/nutrio/
+
+            pm2 restart nutrio
+            pm2 restart nutrio-nextjs

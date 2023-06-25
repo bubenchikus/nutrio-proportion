@@ -6,6 +6,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import setMe from "../setMe";
 import axios from "../axios";
+import styles from "../styles/Universal.module.scss";
 
 const Me = ({
   userData,
@@ -38,13 +39,13 @@ const Me = ({
 
   if (loggedIn) {
     return (
-      <Container maxWidth="md" className="rectangle">
+      <Container maxWidth="md" className={styles.rectangle}>
         <h1>My preferences</h1>
         {editing ? (
-          <form className="rectangle">
+          <form className={styles.rectangle}>
             {Object.keys(userData?.preferences).map((el) => {
               return (
-                <div className="dataRow">
+                <div className={styles.dataRow}>
                   <div>{el}:</div>
                   <Select
                     size="small"
@@ -66,7 +67,7 @@ const Me = ({
               );
             })}
             <Button
-              className="greyButton"
+              className={styles.greyButton}
               onClick={() => setEditing(false)}
               type="submit"
             >
@@ -76,7 +77,7 @@ const Me = ({
         ) : (
           Object.keys(userData?.preferences).map((el) => {
             return (
-              <div className="dataRow">
+              <div className={styles.dataRow}>
                 <div>{el}:</div>
                 <div>{userData?.preferences[el]}</div>
               </div>
@@ -88,11 +89,14 @@ const Me = ({
           <></>
         ) : (
           <>
-            <Button className="greyButton" onClick={() => setEditing(true)}>
+            <Button
+              className={styles.greyButton}
+              onClick={() => setEditing(true)}
+            >
               Edit preferences
             </Button>
             <Button
-              className="redButton"
+              className={styles.redButton}
               onClick={(e) => {
                 if (userData?._id === process.env.NEXT_PUBLIC_TEST_ID) {
                   alert("You can't delete test account!");

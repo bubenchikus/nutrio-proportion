@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
+import universalStyles from "../styles/Universal.module.scss";
 
 const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,7 +36,10 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
                 }
               }}
             />
-            <Button onClick={() => sendSearchQuery()} className="greyButton">
+            <Button
+              onClick={() => sendSearchQuery()}
+              className={universalStyles.greyButton}
+            >
               Search
             </Button>
           </div>
@@ -106,7 +110,7 @@ const GridHeader = ({ queryParams, setQueryParams, lists, preferences }) => {
         <div className={styles.cell}>
           <Button
             onClick={() => setQueryParams(preferences)}
-            className="greyButton"
+            className={universalStyles.greyButton}
           >
             Reset table
           </Button>

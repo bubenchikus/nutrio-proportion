@@ -20,11 +20,22 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500&family=Roboto:wght@100;300;400;500;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
+        <link
+          rel="icon"
+          type="image/x-icon"
+          href="/favicon.ico?v=2"
+          sizes="any"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
           href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="48x48"
+          href="/favicon-48x48.png"
         />
         <link
           rel="icon"
