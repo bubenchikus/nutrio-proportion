@@ -26,7 +26,7 @@ jobs:
             cd ..
 
             cd frontend
-            npm i
+            npm ci
             pm2 restart nutrio-nextjs
             rm -r .next
             npm run build

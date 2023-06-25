@@ -1,6 +1,6 @@
 import axios from "../axios";
 import FullGrid from "../components/FullGrid";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Index = ({
   queryParams,
@@ -11,6 +11,8 @@ const Index = ({
   setUserData,
   nutritionData,
   setNutritionData,
+  loading,
+  setLoading,
 }) => {
   useEffect(() => {
     axios
@@ -23,6 +25,7 @@ const Index = ({
       .catch((err) => {
         alert("Error occured while getting nutrition data!");
       });
+    setLoading(false);
   }, [queryParams]);
 
   return (
@@ -34,6 +37,7 @@ const Index = ({
       nutritionData={nutritionData}
       userData={userData}
       setUserData={setUserData}
+      loading={loading}
     />
   );
 };

@@ -10,6 +10,8 @@ const Favourites = ({
   loggedIn,
   userData,
   setUserData,
+  loading,
+  setLoading,
 }) => {
   const [favourites, setFavourites] = useState();
   const [favouritesData, setFavouritesData] = useState([]);
@@ -33,6 +35,7 @@ const Favourites = ({
       dataLength: favouritesData.length,
       pageSize: 10,
     });
+    setLoading(false);
   }, [favouritesData]);
 
   if (loggedIn) {
@@ -45,6 +48,7 @@ const Favourites = ({
         nutritionData={favourites}
         userData={userData}
         setUserData={setUserData}
+        loading={loading}
       />
     );
   } else {

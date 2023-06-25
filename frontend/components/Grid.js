@@ -2,6 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import setupGridColumns from "./helpers/setupGridColumns";
 import setMe from "../setMe";
+import SyncLoader from "react-spinners/SyncLoader";
 
 const Grid = ({
   data,
@@ -11,6 +12,7 @@ const Grid = ({
   userData,
   setUserData,
   loggedIn,
+  loading,
 }) => {
   const base = queryParams?.base;
   const nKey = queryParams?.key;
@@ -24,12 +26,16 @@ const Grid = ({
     nutrients = [nKey].concat(nutrients);
   }
 
-  if (!data?.data) {
+  if (loading) {
     return (
-      <div className="rectangle">
-        <h1>No data available...</h1>
+      <div className="centerAlert">
+        <SyncLoader color="grey" />
       </div>
     );
+  } else if (!data?.data) {
+    <div className="rectangle">
+      <h1>No data available!</h1>
+    </div>;
   } else {
     return (
       <>

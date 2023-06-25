@@ -9,6 +9,7 @@ const FullGrid = ({
   nutritionData,
   userData,
   setUserData,
+  loading,
 }) => {
   return (
     <>
@@ -42,6 +43,7 @@ const FullGrid = ({
         userData={userData}
         setUserData={setUserData}
         loggedIn={loggedIn}
+        loading={loading}
       />
     </>
   );
