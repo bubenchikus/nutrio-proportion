@@ -28,6 +28,7 @@ jobs:
 
             cd frontend
             rm -r node_modules
+            rm package-lock.json
             npm i --force --no-optional
             pm2 restart nutrio-nextjs
             rm -r .next
