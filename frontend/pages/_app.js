@@ -9,6 +9,9 @@ export default function App({ Component, pageProps }) {
   const [userData, setUserData] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [nutritionData, setNutritionData] = useState({});
+
+  const router = useRouter();
 
   const baseList = ["byWeight", "byCalories"];
   const nutrientList = ["carb", "fiber", "protein", "fat"];
@@ -23,10 +26,7 @@ export default function App({ Component, pageProps }) {
     page: 0,
   };
 
-  const [nutritionData, setNutritionData] = useState({});
   const [queryParams, setQueryParams] = useState(queryDefaults);
-
-  const router = useRouter();
 
   useEffect(() => {
     setLoggedIn(localStorage.getItem("token") ? true : false);
@@ -51,6 +51,7 @@ export default function App({ Component, pageProps }) {
       <Header
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
+        userData={userData}
         setUserData={setUserData}
         router={router}
         setQueryParams={setQueryParams}

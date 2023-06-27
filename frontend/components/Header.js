@@ -7,6 +7,7 @@ const Header = ({
   loggedIn,
   setLoggedIn,
   router,
+  userData,
   setUserData,
   setQueryParams,
   queryDefaults,
@@ -23,7 +24,19 @@ const Header = ({
           <Link
             className={styles.gridLink}
             href="/"
-            onClick={() => setQueryParams(queryDefaults)}
+            onClick={() => {
+              if (userData?.preferences) {
+                setQueryParams({
+                  base: userData.preferences.base,
+                  key: userData.preferences.key,
+                  sort: userData.preferences.sort,
+                  page: 0,
+                  description: "",
+                });
+              } else {
+                setQueryParams(queryDefaults);
+              }
+            }}
           >
             Main page
           </Link>
@@ -33,7 +46,19 @@ const Header = ({
           <Link
             className={styles.gridLink}
             href="/me/favourites"
-            onClick={() => setQueryParams(queryDefaults)}
+            onClick={() => {
+              if (userData?.preferences) {
+                setQueryParams({
+                  base: userData.preferences.base,
+                  key: userData.preferences.key,
+                  sort: userData.preferences.sort,
+                  page: 0,
+                  description: "",
+                });
+              } else {
+                setQueryParams(queryDefaults);
+              }
+            }}
           >
             Favourites
           </Link>

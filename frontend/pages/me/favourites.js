@@ -16,8 +16,8 @@ const Favourites = ({
   const [favouritesData, setFavouritesData] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
     if (userData.favourites) {
+      setLoading(true);
       axios
         .get(
           `/nutrition/favourites?description=${queryParams?.description}&base=${queryParams?.base}&key=${queryParams?.key}&sort=${queryParams?.sort}&page=${queryParams?.page}`,
@@ -33,8 +33,8 @@ const Favourites = ({
         .catch((err) => {
           alert("Error occured while getting user data!");
         });
+      setLoading(false);
     }
-    setLoading(false);
   }, [queryParams]);
 
   if (loggedIn) {
