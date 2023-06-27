@@ -13,17 +13,18 @@ export default function App({ Component, pageProps }) {
   const baseList = ["byWeight", "byCalories"];
   const nutrientList = ["carb", "fiber", "protein", "fat"];
   const sortList = ["asc", "desc"];
-
   const lists = { base: baseList, key: nutrientList, sort: sortList };
 
-  const [nutritionData, setNutritionData] = useState({});
-  const [queryParams, setQueryParams] = useState({
+  const queryDefaults = {
     description: "",
     base: baseList[1],
     key: nutrientList[2],
     sort: sortList[1],
     page: 0,
-  });
+  };
+
+  const [nutritionData, setNutritionData] = useState({});
+  const [queryParams, setQueryParams] = useState(queryDefaults);
 
   const router = useRouter();
 
@@ -36,8 +37,8 @@ export default function App({ Component, pageProps }) {
             Authentication: "Bearer " + localStorage.getItem("token"),
           },
         })
-        .then((response) => {
-          setUserData(response.data);
+        .then((res) => {
+          setUserData(res.data);
         })
         .catch((err) => {
           alert("Error occured while getting user data!");
@@ -52,6 +53,8 @@ export default function App({ Component, pageProps }) {
         setLoggedIn={setLoggedIn}
         setUserData={setUserData}
         router={router}
+        setQueryParams={setQueryParams}
+        queryDefaults={queryDefaults}
       />
       <Component
         loggedIn={loggedIn}
@@ -63,6 +66,7 @@ export default function App({ Component, pageProps }) {
         setNutritionData={setNutritionData}
         queryParams={queryParams}
         setQueryParams={setQueryParams}
+        queryDefaults={queryDefaults}
         lists={lists}
         loading={loading}
         setLoading={setLoading}

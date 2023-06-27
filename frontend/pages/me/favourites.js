@@ -13,43 +13,44 @@ const Favourites = ({
   loading,
   setLoading,
 }) => {
-  const [favourites, setFavourites] = useState({});
   const [favouritesData, setFavouritesData] = useState([]);
 
   useEffect(() => {
-    userData?.favourites?.forEach(async (id) => {
-      await axios
-        .get(`/nutrition/${id}`)
-        .then((response) => {
-          setFavouritesData((prev) => [...prev, response.data]);
+    setLoading(true);
+    if (userData.favourites) {
+      axios
+        .get(
+          `/nutrition/favourites?description=${queryParams?.description}&base=${queryParams?.base}&key=${queryParams?.key}&sort=${queryParams?.sort}&page=${queryParams?.page}`,
+          {
+            headers: {
+              Authentication: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((res) => {
+          setFavouritesData(res.data);
         })
         .catch((err) => {
           alert("Error occured while getting user data!");
         });
-    });
-  }, []);
-
-  useEffect(() => {
-    setFavourites({
-      data: favouritesData,
-      dataLength: favouritesData.length,
-      pageSize: 10,
-    });
+    }
     setLoading(false);
-  }, [favouritesData]);
+  }, [queryParams]);
 
   if (loggedIn) {
     return (
-      <FullGrid
-        queryParams={queryParams}
-        setQueryParams={setQueryParams}
-        lists={lists}
-        loggedIn={loggedIn}
-        nutritionData={favourites}
-        userData={userData}
-        setUserData={setUserData}
-        loading={loading}
-      />
+      <>
+        <FullGrid
+          queryParams={queryParams}
+          setQueryParams={setQueryParams}
+          lists={lists}
+          loggedIn={loggedIn}
+          nutritionData={favouritesData}
+          userData={userData}
+          setUserData={setUserData}
+          loading={loading}
+        />
+      </>
     );
   } else {
     return <LoginAlert warning="Please login to view favourites!" />;

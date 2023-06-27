@@ -51,3 +51,9 @@ export const queryValidation = [
     .withMessage("Page query parameter must be integer!")
     .optional(),
 ];
+
+export const favouritesValidation = [
+  query("ids.*", "Incorrect id format detected!")
+    .isString()
+    .isLength({ min: 24, max: 24 }),
+];

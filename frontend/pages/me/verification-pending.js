@@ -3,7 +3,7 @@ import axios from "../../axios";
 import MUIStyles from "../../components/helpers/setMUIStyles";
 import universalStyles from "../../styles/Universal.module.scss";
 
-const VerificationPending = ({}) => {
+const VerificationPending = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     await axios

@@ -76,7 +76,7 @@ const Me = ({
             </Button>
           </form>
         ) : (
-          Object.keys(userData?.preferences ?? {}).map((el) => {
+          Object.keys(userData?.preferences).map((el) => {
             return (
               <div className={universalStyles.dataRow}>
                 <div>{el}:</div>

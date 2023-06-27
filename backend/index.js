@@ -8,6 +8,7 @@ import {
   registerValidation,
   meValidation,
   queryValidation,
+  favouritesValidation,
   validationResultStatus,
 } from "./src/middleware/valid.js";
 import cors from "cors";
@@ -31,7 +32,13 @@ app.get(
   validationResultStatus,
   NutritionQueries.getNutrition
 ); // filter with query parameters: asc/desc, priority nutrient by calories/weight proportion, word search
-app.get("/nutrition/:id", NutritionQueries.getNutritionById);
+app.get(
+  "/nutrition/favourites",
+  checkAuth,
+  favouritesValidation,
+  validationResultStatus,
+  NutritionQueries.getFavourites
+);
 
 app.post("/login", UserQueries.login);
 
@@ -51,8 +58,6 @@ app.post(
   UserQueries.setMe
 );
 app.delete("/me", checkAuth, UserQueries.deleteUser);
-
-app.get("/me/favourites", checkAuth);
 
 app.get("/verify", TokenQueries.sendVerificationToken);
 app.get("/verify/:token", TokenQueries.recieveVerificationToken);

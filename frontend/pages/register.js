@@ -34,8 +34,8 @@ const Register = ({ router }) => {
       })
       .catch((err) => {
         alert(
-          err.response.data?.msg ||
-            err.response.data[0]?.msg ||
+          err.res.data?.msg ||
+            err.res.data[0]?.msg ||
             "Something went wrong in the register process!"
         );
       });

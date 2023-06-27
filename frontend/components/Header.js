@@ -3,7 +3,14 @@ import Image from "next/image";
 import barIcon from "../public/barIcon.svg";
 import Link from "next/link";
 
-const Header = ({ loggedIn, setLoggedIn, router, setUserData }) => {
+const Header = ({
+  loggedIn,
+  setLoggedIn,
+  router,
+  setUserData,
+  setQueryParams,
+  queryDefaults,
+}) => {
   return (
     <div className={styles.grid}>
       <Link className={styles.logoBox} href="/">
@@ -13,13 +20,21 @@ const Header = ({ loggedIn, setLoggedIn, router, setUserData }) => {
       <div></div>
       {loggedIn ? (
         <>
-          <Link className={styles.gridLink} href="/">
+          <Link
+            className={styles.gridLink}
+            href="/"
+            onClick={() => setQueryParams(queryDefaults)}
+          >
             Main page
           </Link>
           <Link className={styles.gridLink} href="/me">
             Me
           </Link>
-          <Link className={styles.gridLink} href="/me/favourites">
+          <Link
+            className={styles.gridLink}
+            href="/me/favourites"
+            onClick={() => setQueryParams(queryDefaults)}
+          >
             Favourites
           </Link>
           <div
