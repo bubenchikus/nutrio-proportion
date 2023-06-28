@@ -9,11 +9,14 @@ const Favourites = ({
   loggedIn,
   userData,
   setUserData,
-  loading,
-  setLoading,
 }) => {
-  const [queryParams, setQueryParams] = useState(queryDefaults);
+  const [queryParams, setQueryParams] = useState(
+    userData.preferences
+      ? { ...userData.preferences, description: "", page: 0 }
+      : queryDefaults
+  );
   const [favouritesData, setFavouritesData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (userData.favourites) {

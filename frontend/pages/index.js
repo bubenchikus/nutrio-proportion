@@ -10,10 +10,13 @@ const Index = ({
   setUserData,
   nutritionData,
   setNutritionData,
-  loading,
-  setLoading,
 }) => {
-  const [queryParams, setQueryParams] = useState(queryDefaults);
+  const [queryParams, setQueryParams] = useState(
+    userData.preferences
+      ? { ...userData.preferences, description: "", page: 0 }
+      : queryDefaults
+  );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);

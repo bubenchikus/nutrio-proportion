@@ -74,12 +74,16 @@ export const getFavourites = async (req, res) => {
       )
     );
 
-    data.sort((a, b) => {
+    const filteredData = data.filter((el) =>
+      el.description.toLowerCase().includes(req.query.description.toLowerCase())
+    );
+
+    const sortedData = filteredData.sort((a, b) => {
       const nutrient_a =
         a.foodNutrients?.proportions[defaults.base][defaults.key];
       const nutrient_b =
         b.foodNutrients?.proportions[defaults.base][defaults.key];
-      if (defaults.sort === "asc") {
+      if (defaults.sort === 1) {
         return nutrient_a - nutrient_b;
       } else {
         return nutrient_b - nutrient_a;
@@ -88,12 +92,12 @@ export const getFavourites = async (req, res) => {
 
     const pageSize = parseInt(process.env.PAGE_SIZE);
     const page = parseInt(req.query.page) || 0;
-    const dataLength = data.length;
+    const dataLength = sortedData.length;
 
     const startIndex = pageSize * page;
     const stopIndex = pageSize * (page + 1);
 
-    const paginatedData = data.slice(
+    const paginatedData = sortedData.slice(
       startIndex,
       stopIndex < dataLength ? stopIndex : dataLength
     );

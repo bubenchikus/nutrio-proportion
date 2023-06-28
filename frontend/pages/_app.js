@@ -8,7 +8,6 @@ import axios from "../axios";
 export default function App({ Component, pageProps }) {
   const [userData, setUserData] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [nutritionData, setNutritionData] = useState({});
 
   const router = useRouter();
@@ -63,8 +62,6 @@ export default function App({ Component, pageProps }) {
         setNutritionData={setNutritionData}
         queryDefaults={queryDefaults}
         lists={lists}
-        loading={loading}
-        setLoading={setLoading}
         {...pageProps}
       />
     </Container>

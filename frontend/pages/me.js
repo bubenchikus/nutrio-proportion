@@ -9,15 +9,7 @@ import axios from "../axios";
 import MUIStyles from "../components/helpers/setMUIStyles";
 import universalStyles from "../styles/Universal.module.scss";
 
-const Me = ({
-  userData,
-  loggedIn,
-  setLoggedIn,
-  lists,
-  queryParams,
-  setQueryParams,
-  router,
-}) => {
+const Me = ({ userData, loggedIn, setLoggedIn, lists, router }) => {
   const [editing, setEditing] = useState(false);
 
   const handleClick = async (e) => {
@@ -38,7 +30,7 @@ const Me = ({
       });
   };
 
-  if (loggedIn) {
+  if (loggedIn && userData.preferences) {
     return (
       <Container maxWidth="md" sx={MUIStyles.rectangle}>
         <h1>My preferences</h1>
@@ -52,10 +44,8 @@ const Me = ({
                     size="small"
                     defaultValue={userData["preferences"][el]}
                     onChange={(e) => {
-                      userData.preferences[el] = queryParams[el] =
-                        e.target.value;
+                      userData.preferences[el] = e.target.value;
                       setMe(userData);
-                      setQueryParams(queryParams);
                     }}
                   >
                     {lists[el]?.map((el) => (
