@@ -3,7 +3,7 @@ import Image from "next/image";
 import barIcon from "../public/barIcon.svg";
 import Link from "next/link";
 
-const Header = ({ loggedIn, setLoggedIn, router, userData, setUserData }) => {
+const Header = ({ loggedIn, setLoggedIn, router, setUserData }) => {
   return (
     <div className={styles.grid}>
       <Link className={styles.logoBox} href="/">

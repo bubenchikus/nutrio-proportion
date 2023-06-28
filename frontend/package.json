@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev -p 5001",
     "start": "next start -p 5001",
-    "build": "next build && gzipper compress --verbose .next"
+    "build": "next build"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,7 @@
     "@mui/x-data-grid": "^6.7.0",
     "axios": "^1.4.0",
     "gzipper": "^7.2.0",
-    "next": "^13.4.4",
+    "next": "^13.4.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-horizontal-stacked-bar-chart": "^8.15.2",
