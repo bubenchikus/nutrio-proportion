@@ -1,10 +1,9 @@
 import axios from "../axios";
 import FullGrid from "../components/FullGrid";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Index = ({
-  queryParams,
-  setQueryParams,
+  queryDefaults,
   lists,
   loggedIn,
   userData,
@@ -14,6 +13,8 @@ const Index = ({
   loading,
   setLoading,
 }) => {
+  const [queryParams, setQueryParams] = useState(queryDefaults);
+
   useEffect(() => {
     setLoading(true);
     axios

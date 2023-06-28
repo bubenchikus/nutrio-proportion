@@ -4,8 +4,7 @@ import axios from "../../axios";
 import LoginAlert from "../../components/LoginAlert";
 
 const Favourites = ({
-  queryParams,
-  setQueryParams,
+  queryDefaults,
   lists,
   loggedIn,
   userData,
@@ -13,6 +12,7 @@ const Favourites = ({
   loading,
   setLoading,
 }) => {
+  const [queryParams, setQueryParams] = useState(queryDefaults);
   const [favouritesData, setFavouritesData] = useState([]);
 
   useEffect(() => {

@@ -26,8 +26,6 @@ export default function App({ Component, pageProps }) {
     page: 0,
   };
 
-  const [queryParams, setQueryParams] = useState(queryDefaults);
-
   useEffect(() => {
     setLoggedIn(localStorage.getItem("token") ? true : false);
     if (loggedIn) {
@@ -54,8 +52,6 @@ export default function App({ Component, pageProps }) {
         userData={userData}
         setUserData={setUserData}
         router={router}
-        setQueryParams={setQueryParams}
-        queryDefaults={queryDefaults}
       />
       <Component
         loggedIn={loggedIn}
@@ -65,8 +61,6 @@ export default function App({ Component, pageProps }) {
         router={router}
         nutritionData={nutritionData}
         setNutritionData={setNutritionData}
-        queryParams={queryParams}
-        setQueryParams={setQueryParams}
         queryDefaults={queryDefaults}
         lists={lists}
         loading={loading}
