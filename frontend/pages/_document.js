@@ -6,6 +6,7 @@ export default function Document() {
       <title>Nutrio-proportion</title>
       <Head>
         <meta keywords={"nutrio-proportion, nutrition, foods-rating"}></meta>
+        <meta name="viewport" content="width=1024" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
